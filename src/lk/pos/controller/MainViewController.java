@@ -65,4 +65,19 @@ public class MainViewController implements Initializable {
     void loadSuplierPage(MouseEvent event) {
         PageLoader("ManageSupliersPage");
     }
+
+    @FXML
+    void loadStockPage(MouseEvent event) {
+        PageLoader("StockRefillPage");
+    }
+
+    @FXML
+    void loadBuyPaymentPage(MouseEvent event) {
+        PageLoader("BuyPayment");
+    }
+
+    @FXML
+    void loadReportPage(MouseEvent event) {
+        PageLoader("ReportsPage");
+    }
 }
