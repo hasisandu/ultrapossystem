@@ -5,9 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import lk.pos.DBUtility.CrudUtill;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class MainViewController implements Initializable {
@@ -15,6 +19,9 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+        loadCustomerCount();
+
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/Default.fxml"));
             mainwindow.getChildren().setAll(root);
@@ -22,6 +29,25 @@ public class MainViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    private Text totalitems;
+
+    @FXML
+    private Text todayincome;
+
+    @FXML
+    private Text monthincome;
+
+    @FXML
+    private Text suppliercount;
+
+    @FXML
+    private Text customercount;
+
+    @FXML
+    private Text debdesCount;
+
 
     @FXML
     private AnchorPane mainwindow;
@@ -79,5 +105,21 @@ public class MainViewController implements Initializable {
     @FXML
     void loadReportPage(MouseEvent event) {
         PageLoader("ReportsPage");
+    }
+
+    private void loadCustomerCount() {
+        try {
+            ResultSet set = CrudUtill.executeQuery("select count(customerid) from customer");
+            if (set.next()) {
+                int tempcount = set.getInt(1);
+                customercount.setText(tempcount + "");
+            } else {
+                customercount.setText("0");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 }

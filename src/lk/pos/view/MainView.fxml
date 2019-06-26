@@ -255,13 +255,14 @@
             <Separator layoutX="499.0" layoutY="10.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
             <Separator layoutX="664.0" layoutY="11.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
             <Separator layoutX="837.0" layoutY="10.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
-            <Text fill="#0984e3" layoutX="20.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="totalitems" fill="#0984e3" layoutX="20.0" layoutY="68.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
              <Text fill="#fab1a0" layoutX="188.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="Today Income">
@@ -269,26 +270,28 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#fab1a0" layoutX="184.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="todayincome" fill="#fab1a0" layoutX="184.0" layoutY="68.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
             <Text fill="#636e72" layoutX="357.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Month Income">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#4834d4" layoutX="353.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="monthincome" fill="#4834d4" layoutX="353.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
              <Text fill="#e84118" layoutX="527.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="Suppliers Count">
@@ -296,13 +299,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#e84118" layoutX="523.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="suppliercount" fill="#e84118" layoutX="523.0" layoutY="71.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
              <Text fill="#fbc531" layoutX="690.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="Customers Count">
@@ -310,26 +314,28 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#fbc531" layoutX="686.0" layoutY="71.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="customercount" fill="#fbc531" layoutX="686.0" layoutY="71.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
             <Text fill="#44bd32" layoutX="860.0" layoutY="21.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Debits">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#44bd32" layoutX="856.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500">
+             <Text fx:id="debdesCount" fill="#44bd32" layoutX="856.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="2500">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
-                <cursor>
-                    <Cursor fx:constant="HAND"/>
-                </cursor>
+                 <cursor>
+                     <Cursor fx:constant="HAND"/>
+                 </cursor>
             </Text>
          </children>
       </AnchorPane>

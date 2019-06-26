@@ -2,6 +2,7 @@
   <library name="jfoenix-1.8.0">
     <CLASSES>
       <root url="jar://F:/jars/scene builder/jfoenix-1.8.0.jar!/" />
+      <root url="jar://F:/jars/sql/mysql-connector-java-5.1.47/mysql-connector-java-5.1.47.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
