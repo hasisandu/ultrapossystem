@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -37,6 +38,9 @@
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </JFXButton>
         <TableView layoutX="528.0" layoutY="87.0" prefHeight="129.0" prefWidth="476.0">
             <columns>
@@ -46,6 +50,9 @@
                 <TableColumn prefWidth="90.0" text="QTY On Hand"/>
                 <TableColumn prefWidth="90.0" text="Price"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
         <TableView layoutX="25.0" layoutY="87.0" prefHeight="129.0" prefWidth="476.0">
             <columns>
@@ -55,6 +62,9 @@
                 <TableColumn prefWidth="90.0" text="Address"/>
                 <TableColumn prefWidth="90.0" text="Debit"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
         <Separator layoutX="512.0" layoutY="49.0" orientation="VERTICAL" prefHeight="167.0" prefWidth="0.0"/>
         <JFXTextField editable="false" labelFloat="true" layoutX="25.0" layoutY="238.0" promptText="Customer ID">
@@ -77,6 +87,9 @@
                 <TableColumn prefWidth="90.0" text="QTY"/>
                 <TableColumn prefWidth="90.0" text="Amount"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
         <JFXTextField editable="false" labelFloat="true" layoutX="528.0" layoutY="238.0" prefHeight="29.0"
                       prefWidth="135.0" promptText="Item ID">
@@ -124,6 +137,9 @@
             <font>
                 <Font size="13.0"/>
             </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </JFXButton>
         <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="691.0" layoutY="423.0" pickOnBounds="true">
             <image>

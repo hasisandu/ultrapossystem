@@ -2,6 +2,7 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,6 +23,9 @@
             <font>
                 <Font size="13.0"/>
             </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </JFXButton>
         <TableView layoutX="574.0" layoutY="90.0" prefHeight="194.0" prefWidth="447.0">
             <columns>
@@ -31,6 +35,9 @@
                 <TableColumn prefWidth="103.0" text="Payment Type"/>
                 <TableColumn prefWidth="82.0" text="Amount"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
         <Separator layoutX="25.0" layoutY="142.0" prefHeight="3.0" prefWidth="324.0"/>
         <RadioButton layoutX="80.0" layoutY="111.0" mnemonicParsing="false" selected="true" text="With Cash"
@@ -38,9 +45,16 @@
             <toggleGroup>
                 <ToggleGroup fx:id="a1"/>
             </toggleGroup>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </RadioButton>
         <RadioButton layoutX="185.0" layoutY="111.0" mnemonicParsing="false" text="With Check" textFill="#0d0686"
-                     toggleGroup="$a1"/>
+                     toggleGroup="$a1">
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </RadioButton>
         <Text fill="#0984e3" layoutX="29.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method">
             <font>
                 <Font name="Cambria Bold" size="13.0"/>
@@ -64,6 +78,9 @@
                 <TableColumn prefWidth="95.0" text="QTY"/>
                 <TableColumn prefWidth="130.0" text="Amount"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
         <TextField editable="false" layoutX="23.0" layoutY="197.0" prefHeight="31.0" prefWidth="149.0"
                    promptText="Nett">
