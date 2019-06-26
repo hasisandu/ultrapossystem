@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
+            prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Selling Payments">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Text>
+        <Separator layoutX="173.0" layoutY="28.0" prefHeight="3.0" prefWidth="855.0"/>
+        <JFXButton buttonType="RAISED" layoutX="23.0" layoutY="241.0" prefHeight="31.0" prefWidth="475.0"
+                   style="-fx-background-color: #0B6EF2;" text="Submit Payment" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </JFXButton>
+        <TableView layoutX="574.0" layoutY="90.0" prefHeight="194.0" prefWidth="447.0">
+            <columns>
+                <TableColumn prefWidth="86.0" text="Payment ID"/>
+                <TableColumn prefWidth="85.0" text="Date"/>
+                <TableColumn prefWidth="90.0" text="Time"/>
+                <TableColumn prefWidth="103.0" text="Payment Type"/>
+                <TableColumn prefWidth="82.0" text="Amount"/>
+            </columns>
+        </TableView>
+        <Separator layoutX="25.0" layoutY="142.0" prefHeight="3.0" prefWidth="324.0"/>
+        <RadioButton layoutX="80.0" layoutY="111.0" mnemonicParsing="false" selected="true" text="With Cash"
+                     textFill="#0d0686">
+            <toggleGroup>
+                <ToggleGroup fx:id="a1"/>
+            </toggleGroup>
+        </RadioButton>
+        <RadioButton layoutX="185.0" layoutY="111.0" mnemonicParsing="false" text="With Check" textFill="#0d0686"
+                     toggleGroup="$a1"/>
+        <Text fill="#0984e3" layoutX="29.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Payment Method">
+            <font>
+                <Font name="Cambria Bold" size="13.0"/>
+            </font>
+        </Text>
+        <TextField editable="false" layoutX="23.0" layoutY="153.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Order ID">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TextField layoutX="574.0" layoutY="40.0" prefHeight="31.0" prefWidth="447.0" promptText="Order ID">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TableView layoutX="574.0" layoutY="304.0" prefHeight="194.0" prefWidth="447.0">
+            <columns>
+                <TableColumn prefWidth="86.0" text="ItemID"/>
+                <TableColumn prefWidth="134.0" text="Name"/>
+                <TableColumn prefWidth="95.0" text="QTY"/>
+                <TableColumn prefWidth="130.0" text="Amount"/>
+            </columns>
+        </TableView>
+        <TextField editable="false" layoutX="23.0" layoutY="197.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Nett">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TextField editable="false" layoutX="187.0" layoutY="153.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Sub Total">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TextField layoutX="349.0" layoutY="153.0" prefHeight="31.0" prefWidth="149.0" promptText="Discount">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TextField layoutX="185.0" layoutY="197.0" prefHeight="31.0" prefWidth="149.0" promptText="Amount">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <TextField editable="false" layoutX="349.0" layoutY="197.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Blance">
+            <font>
+                <Font name="System Italic" size="15.0"/>
+            </font>
+        </TextField>
+        <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="173.0" layoutY="245.0" pickOnBounds="true">
+            <image>
+                <Image url="@../image/icons8_receive_cash_filled_50px_1.png"/>
+            </image>
+        </ImageView>
+    </children>
+</AnchorPane>

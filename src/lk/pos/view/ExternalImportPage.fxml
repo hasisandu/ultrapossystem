@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
+            prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="External Imports">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Text>
+        <Separator layoutX="163.0" layoutY="28.0" prefHeight="0.0" prefWidth="865.0"/>
+        <TextArea layoutX="25.0" layoutY="49.0" prefHeight="153.0" prefWidth="491.0" promptText="Discription">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </TextArea>
+        <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="273.0" prefHeight="31.0" prefWidth="110.0"
+                   style="-fx-background-color: #0B6EF2;" text="Save Imports" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton buttonType="RAISED" layoutX="145.0" layoutY="273.0" prefHeight="31.0" prefWidth="124.0"
+                   style="-fx-background-color: #E07713;" text="Update Customer" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </JFXButton>
+        <JFXButton buttonType="RAISED" layoutX="821.0" layoutY="403.0" prefHeight="31.0" prefWidth="118.0"
+                   style="-fx-background-color: #C21F0E;" text="Delete Imports" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </JFXButton>
+        <TableView layoutX="608.0" layoutY="98.0" prefHeight="299.0" prefWidth="331.0">
+            <columns>
+                <TableColumn prefWidth="75.0" text="Date"/>
+                <TableColumn prefWidth="129.0" text="Time"/>
+                <TableColumn prefWidth="125.0" text="Cost"/>
+            </columns>
+        </TableView>
+        <TextField layoutX="25.0" layoutY="216.0" prefHeight="31.0" prefWidth="155.0" promptText="Cost">
+            <font>
+                <Font size="15.0"/>
+            </font>
+        </TextField>
+        <JFXDatePicker layoutX="614.0" layoutY="49.0" prefHeight="28.0" prefWidth="324.0" promptText="Inser Date Here"/>
+        <Separator layoutX="25.0" layoutY="255.0" prefHeight="3.0" prefWidth="584.0"/>
+    </children>
+</AnchorPane>

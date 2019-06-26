@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
+            prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Place Order">
+            <font>
+                <Font name="System Bold" size="18.0"/>
+            </font>
+        </Text>
+        <Separator layoutX="163.0" layoutY="28.0" prefHeight="0.0" prefWidth="865.0"/>
+        <AnchorPane layoutX="25.0" layoutY="49.0" prefHeight="31.0" prefWidth="979.0">
+            <children>
+                <TextField layoutY="2.0" prefHeight="31.0" prefWidth="476.0"
+                           promptText="Search Customer in Name, City or ID ....">
+                    <font>
+                        <Font name="System Italic" size="14.0"/>
+                    </font>
+                </TextField>
+                <TextField layoutX="503.0" layoutY="-1.0" prefHeight="31.0" prefWidth="476.0"
+                           promptText="Search Item in Name, Specify Number or ID ....">
+                    <font>
+                        <Font name="System Italic" size="14.0"/>
+                    </font>
+                </TextField>
+            </children>
+        </AnchorPane>
+        <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="474.0" prefHeight="31.0" prefWidth="476.0"
+                   style="-fx-background-color: #0B6EF2;" text="Submit Order" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </JFXButton>
+        <TableView layoutX="528.0" layoutY="87.0" prefHeight="129.0" prefWidth="476.0">
+            <columns>
+                <TableColumn prefWidth="64.0" text="Item ID"/>
+                <TableColumn prefWidth="100.0" text="Name"/>
+                <TableColumn prefWidth="134.0" text="Discription"/>
+                <TableColumn prefWidth="90.0" text="QTY On Hand"/>
+                <TableColumn prefWidth="90.0" text="Price"/>
+            </columns>
+        </TableView>
+        <TableView layoutX="25.0" layoutY="87.0" prefHeight="129.0" prefWidth="476.0">
+            <columns>
+                <TableColumn prefWidth="64.0" text="Cus ID"/>
+                <TableColumn prefWidth="100.0" text="Name"/>
+                <TableColumn prefWidth="134.0" text="Contact"/>
+                <TableColumn prefWidth="90.0" text="Address"/>
+                <TableColumn prefWidth="90.0" text="Debit"/>
+            </columns>
+        </TableView>
+        <Separator layoutX="512.0" layoutY="49.0" orientation="VERTICAL" prefHeight="167.0" prefWidth="0.0"/>
+        <JFXTextField editable="false" labelFloat="true" layoutX="25.0" layoutY="238.0" promptText="Customer ID">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <JFXTextField editable="false" labelFloat="true" layoutX="208.0" layoutY="238.0" prefHeight="29.0"
+                      prefWidth="291.0" promptText="Name">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <Separator layoutX="23.0" layoutY="280.0" prefHeight="3.0" prefWidth="496.0"/>
+        <TableView layoutX="25.0" layoutY="301.0" prefHeight="167.0" prefWidth="476.0">
+            <columns>
+                <TableColumn prefWidth="64.0" text="Item ID"/>
+                <TableColumn prefWidth="100.0" text="Name"/>
+                <TableColumn prefWidth="134.0" text="Description"/>
+                <TableColumn prefWidth="90.0" text="QTY"/>
+                <TableColumn prefWidth="90.0" text="Amount"/>
+            </columns>
+        </TableView>
+        <JFXTextField editable="false" labelFloat="true" layoutX="528.0" layoutY="238.0" prefHeight="29.0"
+                      prefWidth="135.0" promptText="Item ID">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <JFXTextField editable="false" labelFloat="true" layoutX="677.0" layoutY="238.0" prefHeight="29.0"
+                      prefWidth="135.0" promptText="Name">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <JFXTextField editable="false" labelFloat="true" layoutX="824.0" layoutY="238.0" prefHeight="29.0"
+                      prefWidth="181.0" promptText="QTY ON HAND">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <JFXTextArea editable="false" labelFloat="true" layoutX="528.0" layoutY="287.0" prefHeight="78.0"
+                     prefWidth="476.0" promptText="Description">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+        </JFXTextArea>
+        <TextField editable="false" layoutX="528.0" layoutY="376.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Unit Price">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </TextField>
+        <TextField layoutX="691.0" layoutY="376.0" prefHeight="31.0" prefWidth="149.0" promptText="QTY">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </TextField>
+        <TextField editable="false" layoutX="855.0" layoutY="376.0" prefHeight="31.0" prefWidth="149.0"
+                   promptText="Amount">
+            <font>
+                <Font name="System Bold" size="12.0"/>
+            </font>
+        </TextField>
+        <JFXButton buttonType="RAISED" layoutX="528.0" layoutY="422.0" prefHeight="31.0" prefWidth="476.0"
+                   style="-fx-background-color: #00b894;" text="Add to Cart" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+        </JFXButton>
+        <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="691.0" layoutY="423.0" pickOnBounds="true">
+            <image>
+                <Image url="@../image/icons8_shopping_cart_30px.png"/>
+            </image>
+        </ImageView>
+        <Text fill="#b90000" layoutX="840.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Price">
+            <font>
+                <Font size="17.0"/>
+            </font>
+        </Text>
+        <Text fill="#b90000" layoutX="934.0" layoutY="490.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2500 LKR">
+            <font>
+                <Font name="System Bold" size="17.0"/>
+            </font>
+        </Text>
+    </children>
+</AnchorPane>
