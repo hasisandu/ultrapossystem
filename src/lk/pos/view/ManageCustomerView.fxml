@@ -20,39 +20,39 @@
                 <TextField layoutY="-1.0" prefHeight="31.0" prefWidth="979.0"
                            promptText="Search Customer in Name or ID ....">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Italic" size="14.0"/>
                     </font>
                 </TextField>
             </children>
         </AnchorPane>
         <TextField layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Customer ID">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="First Name">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="25.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="Contact">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="Last Name">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="276.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="City">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextArea layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0" promptText="Address">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextArea>
         <JFXButton buttonType="RAISED" layoutX="144.0" layoutY="421.0" prefHeight="31.0" prefWidth="110.0"

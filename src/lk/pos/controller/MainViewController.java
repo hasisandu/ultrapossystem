@@ -46,5 +46,23 @@ public class MainViewController implements Initializable {
         PageLoader("ManageItemView");
     }
 
+    @FXML
+    void loadPlaceOrderPage(MouseEvent event) {
+        PageLoader("PlaceOrderAria");
+    }
 
+    @FXML
+    void loadExternalImportPage(MouseEvent event) {
+        PageLoader("ExternalImportPage");
+    }
+
+    @FXML
+    void loadSellPaymentPage(MouseEvent event) {
+        PageLoader("SellPaymentPage");
+    }
+
+    @FXML
+    void loadSuplierPage(MouseEvent event) {
+        PageLoader("ManageSupliersPage");
+    }
 }

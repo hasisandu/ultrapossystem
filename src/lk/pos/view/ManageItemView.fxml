@@ -20,34 +20,34 @@
                 <TextField layoutY="-1.0" prefHeight="31.0" prefWidth="979.0"
                            promptText="Search Item in Name , Item ID">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Italic" size="14.0"/>
                     </font>
                 </TextField>
             </children>
         </AnchorPane>
         <TextField layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Item ID">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="Product Name">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="25.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="Description">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="124.0" promptText="QTY On Shop">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="409.0" layoutY="152.0" prefHeight="31.0" prefWidth="118.0" promptText="Price">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextArea editable="false" layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0">
@@ -84,12 +84,12 @@
         </TableView>
         <TextField layoutX="170.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Brand ID">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
         <TextField layoutX="315.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Badge ID">
             <font>
-                <Font name="System Bold" size="14.0"/>
+                <Font size="14.0"/>
             </font>
         </TextField>
     </children>
