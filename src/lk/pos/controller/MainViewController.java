@@ -21,6 +21,7 @@ public class MainViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
 
         loadCustomerCount();
+        loadItemCount();
 
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/Default.fxml"));
@@ -29,6 +30,7 @@ public class MainViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
 
     @FXML
     private Text totalitems;
@@ -122,4 +124,21 @@ public class MainViewController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    private void loadItemCount() {
+        try {
+            ResultSet set = CrudUtill.executeQuery("select count(itemid) from item");
+            if (set.next()) {
+                int tempcount = set.getInt(1);
+                totalitems.setText(tempcount + "");
+            } else {
+                totalitems.setText("0");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
