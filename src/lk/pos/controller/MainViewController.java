@@ -23,11 +23,29 @@ public class MainViewController implements Initializable {
         loadCustomerCount();
         loadItemCount();
         loadLessthan10();
+        loadSupplyCount();
 
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/Default.fxml"));
             mainwindow.getChildren().setAll(root);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadSupplyCount() {
+
+        try {
+            ResultSet set = CrudUtill.executeQuery("select count(suplierid) from suplier");
+            if (set.next()) {
+                int tempcount = set.getInt(1);
+                suppliercount.setText(tempcount + "");
+            } else {
+                suppliercount.setText("0");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }

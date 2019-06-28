@@ -255,8 +255,8 @@
             <Separator layoutX="499.0" layoutY="10.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
             <Separator layoutX="664.0" layoutY="11.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
             <Separator layoutX="837.0" layoutY="10.0" orientation="VERTICAL" prefHeight="75.0" prefWidth="0.0" />
-             <Text fx:id="totalitems" fill="#0984e3" layoutX="20.0" layoutY="68.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="totalitems" fill="#0984e3" layoutX="24.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="104.4873046875">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
@@ -270,8 +270,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="todayincome" fill="#fab1a0" layoutX="184.0" layoutY="68.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="todayincome" fill="#fab1a0" layoutX="190.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="92.94140625">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
@@ -284,8 +284,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="monthincome" fill="#4834d4" layoutX="353.0" layoutY="70.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="monthincome" fill="#4834d4" layoutX="357.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="96.7490234375">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
@@ -299,8 +299,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="suppliercount" fill="#e84118" layoutX="523.0" layoutY="71.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="suppliercount" fill="#e84118" layoutX="527.0" layoutY="71.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="104.4873046875">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
@@ -314,8 +314,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="customercount" fill="#fbc531" layoutX="686.0" layoutY="71.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="customercount" fill="#fbc531" layoutX="690.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="113.04589843749989">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
@@ -328,8 +328,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="debdesCount" fill="#44bd32" layoutX="856.0" layoutY="70.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="2500">
+             <Text fx:id="debdesCount" fill="#44bd32" layoutX="860.0" layoutY="70.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="113.04589843749989">
                <font>
                   <Font name="System Bold" size="41.0" />
                </font>
