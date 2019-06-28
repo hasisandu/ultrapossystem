@@ -3,11 +3,13 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
             prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.SuplierController">
     <children>
         <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Suppliers Area">
             <font>
@@ -18,46 +20,51 @@
         <AnchorPane layoutX="25.0" layoutY="49.0" prefHeight="31.0" prefWidth="979.0"
                     style="-fx-background-color: #dfe6e9;">
             <children>
-                <TextField layoutY="-1.0" prefHeight="31.0" prefWidth="979.0"
-                           promptText="Search Supplier in Name or ID ....">
+                <TextField fx:id="searchidtxt" layoutY="-1.0" onKeyReleased="#getserch" prefHeight="31.0"
+                           prefWidth="988.0" promptText="Search Supplier in Contact, Name or ID ....">
                     <font>
                         <Font name="System Italic" size="14.0"/>
                     </font>
                 </TextField>
             </children>
         </AnchorPane>
-        <TextField layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Supplier ID">
+        <TextField fx:id="sid" editable="false" layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
+                   promptText="Supplier ID">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="First Name">
+        <TextField fx:id="fname" layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0"
+                   promptText="First Name">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="25.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="Contact">
+        <TextField fx:id="contact" layoutX="25.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0"
+                   promptText="Contact">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="Last Name">
+        <TextField fx:id="lname" layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0"
+                   promptText="Last Name">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="276.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="City">
+        <TextField fx:id="city" layoutX="276.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="City">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextArea layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0" promptText="Address">
+        <TextArea fx:id="addre" layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0"
+                  promptText="Address">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextArea>
-        <JFXButton buttonType="RAISED" layoutX="144.0" layoutY="421.0" prefHeight="31.0" prefWidth="110.0"
-                   style="-fx-background-color: #0B6EF2;" text="Save Supplier" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="144.0" layoutY="421.0" onMouseClicked="#savesup" prefHeight="31.0"
+                   prefWidth="110.0" style="-fx-background-color: #0B6EF2;" text="Save Supplier" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -65,8 +72,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="264.0" layoutY="421.0" prefHeight="31.0" prefWidth="124.0"
-                   style="-fx-background-color: #E07713;" text="Update Supplier" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="264.0" layoutY="421.0" onMouseClicked="#updatesup" prefHeight="31.0"
+                   prefWidth="124.0" style="-fx-background-color: #E07713;" text="Update Supplier" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -74,8 +81,9 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="399.0" layoutY="421.0" prefHeight="31.0" prefWidth="118.0"
-                   style="-fx-background-color: #C21F0E;" text="Delete Supplier" textFill="WHITE">
+        <JFXButton buttonType="RAISED" disable="true" layoutX="399.0" layoutY="421.0" onMouseClicked="#deletesup"
+                   prefHeight="31.0" prefWidth="118.0" style="-fx-background-color: #C21F0E;" text="Delete Supplier"
+                   textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -83,30 +91,35 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <TableView layoutX="534.0" layoutY="152.0" prefHeight="299.0" prefWidth="476.0">
+        <TextField fx:id="comany" layoutX="171.0" layoutY="109.0" prefHeight="31.0" prefWidth="309.0"
+                   promptText="Company">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </TextField>
+        <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="486.0" layoutY="109.0" onMouseClicked="#refresh"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../image/icons8_refresh_26px_1.png"/>
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
+        <TableView fx:id="searchtable" layoutX="538.0" layoutY="95.0" onMouseClicked="#getCustomerid" prefHeight="358.0"
+                   prefWidth="476.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Suply ID"/>
-                <TableColumn prefWidth="129.0" text="Date"/>
-                <TableColumn prefWidth="125.0" text="Time"/>
-                <TableColumn prefWidth="146.0" text="Debit"/>
+                <TableColumn fx:id="colcusid" prefWidth="75.0" text="Suplier ID"/>
+                <TableColumn fx:id="colfname" prefWidth="129.0" text="Firstname"/>
+                <TableColumn fx:id="collname" prefWidth="125.0" text="LastName"/>
+                <TableColumn fx:id="contact1" prefWidth="146.0" text="Contact"/>
             </columns>
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
-        <JFXButton buttonType="RAISED" layoutX="900.0" layoutY="461.0" prefHeight="31.0" prefWidth="110.0"
-                   style="-fx-background-color: #0B6EF2;" text="Clear Payment" textFill="WHITE">
-            <font>
-                <Font size="13.0"/>
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </JFXButton>
-        <TextField layoutX="171.0" layoutY="109.0" prefHeight="31.0" prefWidth="345.0" promptText="Company">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </TextField>
     </children>
+    <cursor>
+        <Cursor fx:constant="OPEN_HAND"/>
+    </cursor>
 </AnchorPane>

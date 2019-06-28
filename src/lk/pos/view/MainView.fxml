@@ -196,8 +196,8 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </ImageView>
-             <Text fill="WHITE" layoutX="780.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="12"
-                   wrappingWidth="17.000001430511475">
+             <Text fx:id="fuckinqty" fill="WHITE" layoutX="780.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                   text="12" textAlignment="CENTER" wrappingWidth="17.000001430511475">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>

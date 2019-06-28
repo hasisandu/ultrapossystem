@@ -81,7 +81,7 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <TableView fx:id="table2" layoutX="534.0" layoutY="234.0" prefHeight="217.0" prefWidth="470.0">
+        <TableView fx:id="table2" layoutX="534.0" layoutY="234.0" prefHeight="217.0" prefWidth="470.0" visible="false">
             <columns>
                 <TableColumn fx:id="colitemid2" prefWidth="75.0" text="Item ID"/>
                 <TableColumn fx:id="colquantitysop" prefWidth="114.0" text="Quantity In Store"/>
@@ -99,7 +99,7 @@
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TableView fx:id="srchtble1" layoutX="534.0" layoutY="93.0" onMouseClicked="#getItemsbytable" prefHeight="127.0"
+        <TableView fx:id="srchtble1" layoutX="534.0" layoutY="93.0" onMouseClicked="#getItemsbytable" prefHeight="310.0"
                    prefWidth="470.0">
             <columns>
                 <TableColumn fx:id="colid1" prefWidth="75.0" text="Item ID"/>

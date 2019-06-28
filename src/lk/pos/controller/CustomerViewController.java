@@ -69,21 +69,6 @@ public class CustomerViewController implements Initializable {
     private TextArea address;
 
     @FXML
-    private TableView<?> customertable;
-
-    @FXML
-    private TableColumn<?, ?> colorderid;
-
-    @FXML
-    private TableColumn<?, ?> coldate;
-
-    @FXML
-    private TableColumn<?, ?> coltime;
-
-    @FXML
-    private TableColumn<?, ?> coldebit;
-
-    @FXML
     void clearPayments(MouseEvent event) {
 
     }

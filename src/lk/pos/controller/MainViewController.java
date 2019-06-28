@@ -22,6 +22,7 @@ public class MainViewController implements Initializable {
 
         loadCustomerCount();
         loadItemCount();
+        loadLessthan10();
 
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/Default.fxml"));
@@ -43,6 +44,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private Text suppliercount;
+
+
+    @FXML
+    private Text fuckinqty;
 
     @FXML
     private Text customercount;
@@ -127,13 +132,28 @@ public class MainViewController implements Initializable {
 
     private void loadItemCount() {
         try {
-            ResultSet set = CrudUtill.executeQuery("select count(itemid) from item");
+            ResultSet set = CrudUtill.executeQuery("select count(itemid) from stock");
             if (set.next()) {
                 int tempcount = set.getInt(1);
                 totalitems.setText(tempcount + "");
             } else {
                 totalitems.setText("0");
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void loadLessthan10() {
+        try {
+            ResultSet set = CrudUtill.executeQuery("select count(itemid) from stock where qtyonstock<10");
+            if (set.next()) {
+                fuckinqty.setText(set.getInt(1) + "");
+            }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

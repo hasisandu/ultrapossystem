@@ -2,12 +2,14 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
             prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.StockController">
     <children>
         <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock Area">
             <font>
@@ -18,7 +20,7 @@
         <AnchorPane layoutX="25.0" layoutY="49.0" prefHeight="31.0" prefWidth="979.0"
                     style="-fx-background-color: #dfe6e9;">
             <children>
-                <TextField layoutY="-1.0" prefHeight="31.0" prefWidth="979.0"
+                <TextField fx:id="txtsearch" layoutY="-1.0" onKeyPressed="#released" prefHeight="31.0" prefWidth="979.0"
                            promptText="Search Item in Name , Item ID">
                     <font>
                         <Font name="System Italic" size="14.0"/>
@@ -26,38 +28,43 @@
                 </TextField>
             </children>
         </AnchorPane>
-        <TextField layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Item ID">
+        <TextField fx:id="itemidtxt" layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
+                   promptText="Item ID">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0" promptText="Product Name">
+        <TextField fx:id="txtproductname" layoutX="25.0" layoutY="152.0" prefHeight="31.0" prefWidth="240.0"
+                   promptText="Product Name">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="25.0" layoutY="203.0" prefHeight="31.0" prefWidth="240.0" promptText="Description">
+        <TextField fx:id="txtdescribe" layoutX="25.0" layoutY="203.0" onKeyReleased="#oks" prefHeight="31.0"
+                   prefWidth="240.0" promptText="Description">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="124.0" promptText="QTY On Shop">
+        <TextField fx:id="txtqty" layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="124.0"
+                   promptText="QTY On Shop">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField layoutX="409.0" layoutY="152.0" prefHeight="31.0" prefWidth="118.0" promptText="Price">
+        <TextField fx:id="txtprice" layoutX="409.0" layoutY="152.0" prefHeight="31.0" prefWidth="118.0"
+                   promptText="Price">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextArea editable="false" layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0">
+        <TextArea fx:id="txtalldescribe" layoutX="25.0" layoutY="253.0" prefHeight="153.0" prefWidth="491.0">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </TextArea>
-        <JFXButton buttonType="RAISED" layoutX="144.0" layoutY="421.0" prefHeight="31.0" prefWidth="110.0"
-                   style="-fx-background-color: #0B6EF2;" text="Save Item" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="144.0" layoutY="421.0" onMouseClicked="#saveItem" prefHeight="31.0"
+                   prefWidth="110.0" style="-fx-background-color: #0B6EF2;" text="Save Item" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -65,8 +72,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="264.0" layoutY="421.0" prefHeight="31.0" prefWidth="124.0"
-                   style="-fx-background-color: #E07713;" text="Update Item" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="264.0" layoutY="421.0" onMouseClicked="#updateItem" prefHeight="31.0"
+                   prefWidth="124.0" style="-fx-background-color: #E07713;" text="Update Item" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -74,8 +81,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="399.0" layoutY="421.0" prefHeight="31.0" prefWidth="118.0"
-                   style="-fx-background-color: #C21F0E;" text="Delete Item" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="399.0" layoutY="421.0" onMouseClicked="#deleteItem" prefHeight="31.0"
+                   prefWidth="118.0" style="-fx-background-color: #C21F0E;" text="Delete Item" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -83,27 +90,36 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <TableView layoutX="534.0" layoutY="152.0" prefHeight="299.0" prefWidth="476.0">
+        <TextField fx:id="txtbadgeid" layoutX="315.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
+                   promptText="Badge ID">
+            <font>
+                <Font size="14.0"/>
+            </font>
+        </TextField>
+        <ComboBox fx:id="txtbrand" layoutX="162.0" layoutY="109.0" prefHeight="31.0" prefWidth="150.0"
+                  promptText="brand"/>
+        <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="461.0" layoutY="109.0" onMouseClicked="#refreshAll"
+                   pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@../image/icons8_refresh_26px_1.png"/>
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
+        <TableView fx:id="srchtble1" layoutX="544.0" layoutY="106.0" onMouseClicked="#getItemsbytable"
+                   prefHeight="343.0" prefWidth="470.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Item ID"/>
-                <TableColumn prefWidth="114.0" text="Quantity In Store"/>
-                <TableColumn prefWidth="120.0" text="Quantity On Stock"/>
-                <TableColumn prefWidth="75.0" text="Brand"/>
-                <TableColumn prefWidth="91.0" text="Price"/>
+                <TableColumn fx:id="colid1" prefWidth="75.0" text="Item ID"/>
+                <TableColumn fx:id="colproduct1" prefWidth="75.0" text="Product"/>
+                <TableColumn fx:id="colbrand1" prefWidth="75.0" text="Brand"/>
+                <TableColumn fx:id="colbadge1" prefWidth="75.0" text="badge ID"/>
+                <TableColumn fx:id="colqty1" prefWidth="75.0" text="QTY"/>
+                <TableColumn fx:id="colprice1" prefWidth="94.0" text="Price"/>
             </columns>
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
-        <TextField layoutX="170.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Brand ID">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </TextField>
-        <TextField layoutX="315.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0" promptText="Badge ID">
-            <font>
-                <Font size="14.0"/>
-            </font>
-        </TextField>
     </children>
 </AnchorPane>

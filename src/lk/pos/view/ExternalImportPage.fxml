@@ -4,11 +4,13 @@
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
             prefWidth="1031.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.ExternalImportController">
     <children>
         <Text fill="#0984e3" layoutX="25.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0"
               text="External Imports">
@@ -17,13 +19,14 @@
             </font>
         </Text>
         <Separator layoutX="163.0" layoutY="28.0" prefHeight="0.0" prefWidth="865.0"/>
-        <TextArea layoutX="25.0" layoutY="49.0" prefHeight="153.0" prefWidth="491.0" promptText="Discription">
+        <TextArea fx:id="description" layoutX="25.0" layoutY="49.0" prefHeight="153.0" prefWidth="491.0"
+                  promptText="Discription">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextArea>
-        <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="273.0" prefHeight="31.0" prefWidth="110.0"
-                   style="-fx-background-color: #0B6EF2;" text="Save Imports" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="273.0" onMouseClicked="#saveimports" prefHeight="31.0"
+                   prefWidth="110.0" style="-fx-background-color: #0B6EF2;" text="Save Imports" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -31,8 +34,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="145.0" layoutY="273.0" prefHeight="31.0" prefWidth="124.0"
-                   style="-fx-background-color: #E07713;" text="Update Customer" textFill="WHITE">
+        <JFXButton buttonType="RAISED" layoutX="821.0" layoutY="403.0" onMouseClicked="#deleteOrder" prefHeight="31.0"
+                   prefWidth="118.0" style="-fx-background-color: #C21F0E;" text="Delete Imports" textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
@@ -40,35 +43,47 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="821.0" layoutY="403.0" prefHeight="31.0" prefWidth="118.0"
-                   style="-fx-background-color: #C21F0E;" text="Delete Imports" textFill="WHITE">
-            <font>
-                <Font size="13.0"/>
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </JFXButton>
-        <TableView layoutX="608.0" layoutY="98.0" prefHeight="299.0" prefWidth="331.0">
+        <TableView fx:id="table" layoutX="608.0" layoutY="98.0" onMouseClicked="#getID" prefHeight="299.0"
+                   prefWidth="324.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Date"/>
-                <TableColumn prefWidth="129.0" text="Time"/>
-                <TableColumn prefWidth="125.0" text="Cost"/>
+                <TableColumn fx:id="coldate" prefWidth="75.0" text="Date"/>
+                <TableColumn fx:id="coltime" prefWidth="115.0" text="Time"/>
+                <TableColumn fx:id="colcost" prefWidth="133.0" text="Cost"/>
             </columns>
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
-        <TextField layoutX="25.0" layoutY="216.0" prefHeight="31.0" prefWidth="155.0" promptText="Cost">
+        <TextField fx:id="cost" layoutX="25.0" layoutY="216.0" prefHeight="31.0" prefWidth="155.0" promptText="Cost">
             <font>
                 <Font size="15.0"/>
             </font>
         </TextField>
-        <JFXDatePicker layoutX="614.0" layoutY="49.0" prefHeight="28.0" prefWidth="324.0" promptText="Inser Date Here">
+        <JFXDatePicker fx:id="dates" layoutX="616.0" layoutY="49.0" prefHeight="28.0" prefWidth="211.0"
+                       promptText="Inser Date Here">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXDatePicker>
         <Separator layoutX="25.0" layoutY="255.0" prefHeight="3.0" prefWidth="584.0"/>
+        <TextField fx:id="idtxt" editable="false" layoutX="609.0" layoutY="404.0" prefHeight="31.0" prefWidth="189.0"/>
+        <JFXButton buttonType="RAISED" layoutX="835.0" layoutY="49.0" onMouseClicked="#deleteOrder" prefHeight="31.0"
+                   prefWidth="39.0" style="-fx-background-color: #6F31F8;" text=" " textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+        <ImageView fitHeight="28.0" fitWidth="33.0" layoutX="839.0" layoutY="51.0" onMouseClicked="#loadset"
+                   pickOnBounds="true">
+            <image>
+                <Image url="@../image/icons8_search_filled_50px.png"/>
+            </image>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </ImageView>
     </children>
 </AnchorPane>

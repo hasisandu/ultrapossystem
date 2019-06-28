@@ -82,37 +82,17 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="399.0" layoutY="421.0" onMouseClicked="#deleteCustomer"
+        <JFXButton buttonType="RAISED" disable="true" layoutX="399.0" layoutY="421.0" onMouseClicked="#deleteCustomer"
                    prefHeight="31.0" prefWidth="118.0" style="-fx-background-color: #C21F0E;" text="Delete Customer"
                    textFill="WHITE">
             <font>
                 <Font size="13.0"/>
             </font>
             <cursor>
-                <Cursor fx:constant="HAND"/>
+                <Cursor fx:constant="OPEN_HAND"/>
             </cursor>
         </JFXButton>
-        <TableView fx:id="customertable" layoutX="528.0" layoutY="257.0" prefHeight="196.0" prefWidth="476.0">
-            <columns>
-                <TableColumn fx:id="colorderid" prefWidth="75.0" text="Order ID"/>
-                <TableColumn fx:id="coldate" prefWidth="129.0" text="Date"/>
-                <TableColumn fx:id="coltime" prefWidth="125.0" text="Time"/>
-                <TableColumn fx:id="coldebit" prefWidth="146.0" text="Debit"/>
-            </columns>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </TableView>
-        <JFXButton buttonType="RAISED" layoutX="894.0" layoutY="461.0" onMouseClicked="#clearPayments" prefHeight="31.0"
-                   prefWidth="110.0" style="-fx-background-color: #0B6EF2;" text="Clear Payment" textFill="WHITE">
-            <font>
-                <Font size="13.0"/>
-            </font>
-            <cursor>
-                <Cursor fx:constant="HAND"/>
-            </cursor>
-        </JFXButton>
-        <TableView fx:id="searchtable" layoutX="528.0" layoutY="85.0" onMouseClicked="#getCustomerid" prefHeight="145.0"
+        <TableView fx:id="searchtable" layoutX="528.0" layoutY="85.0" onMouseClicked="#getCustomerid" prefHeight="366.0"
                    prefWidth="476.0">
             <columns>
                 <TableColumn fx:id="colcusid" prefWidth="75.0" text="Customer ID"/>
