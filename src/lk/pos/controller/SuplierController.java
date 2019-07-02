@@ -203,29 +203,33 @@ public class SuplierController implements Initializable {
 
         searchtable.getItems().clear();
 
-        String searchtxt = searchidtxt.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + " || city like" + searchtxt + " || contact like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
+        if (searchidtxt.getText().equalsIgnoreCase("")) {
 
-            while (set.next()) {
-                searchtable.getItems().add(new SuplierTM(
-                        set.getString("suplierid"),
-                        set.getString("firstname"),
-                        set.getString("lastname"),
-                        set.getString("city"),
-                        set.getString("contact"),
-                        set.getString("address"),
-                        set.getString("company")
-                ));
+        } else {
+            String searchtxt = searchidtxt.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + " || city like" + searchtxt + " || contact like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+
+                while (set.next()) {
+                    searchtable.getItems().add(new SuplierTM(
+                            set.getString("suplierid"),
+                            set.getString("firstname"),
+                            set.getString("lastname"),
+                            set.getString("city"),
+                            set.getString("contact"),
+                            set.getString("address"),
+                            set.getString("company")
+                    ));
+                }
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
     }

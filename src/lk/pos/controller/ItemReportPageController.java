@@ -111,17 +111,17 @@ public class ItemReportPageController implements Initializable {
 
         String id = tbl.getSelectionModel().getSelectedItem().getItemid();
         try {
-            ResultSet set = CrudUtill.executeQuery("select I.itemid,I.brand,I.name,I.qtyonshop,S.qtyonstock,I.price,I.badgeid,I.description from item i join stock s on s.itemid=i.itemid && i.itemid=?", id);
+            ResultSet set = CrudUtill.executeQuery("select I.itemid,I.brand,I.name,I.qtyonstock,S.qty,I.price,S.id,I.badgeid,I.describedetail from stock i join shop s on s.id=i.itemid && i.itemid=?", id);
 
             if (set.next()) {
                 txtitemid.setText(set.getString("itemid"));
                 txtbrand.setText(set.getString("brand"));
                 txtname.setText(set.getString("name"));
-                txtqtyonshop.setText(set.getString("qtyonshop"));
+                txtqtyonshop.setText(set.getString("qty"));
                 txtqtyonstock.setText(set.getString("qtyonstock"));
                 txtprice.setText(set.getString("price"));
                 txtbadge.setText(set.getString("badgeid"));
-                txtdiscribe.setText(set.getString("description"));
+                txtdiscribe.setText(set.getString("describedetail"));
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Customer Has Deleted...", ButtonType.CLOSE).show();
             }
@@ -146,23 +146,20 @@ public class ItemReportPageController implements Initializable {
 
         String searchtxt = txtitem.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select I.itemid,I.brand,I.name,I.qtyonshop,S.qtyonstock,I.price,I.badgeid,I.description from item i join stock s on i.itemid=s.itemid && i.itemid like" + searchtxt + " || i.brand like" + searchtxt + " || i.name like" + searchtxt + " || i.description like" + searchtxt + "";
+        String sql = "select a.itemid,a.brand,a.name,a.qtyonstock,b.qty,b.id,a.price,a.badgeid,a.describedetail from stock a join shop b on b.id=a.itemid && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.describedetail like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
             while (set.next()) {
-
-                System.out.println(set.getInt("qtyonstock"));
-                System.out.println(set.getString("description"));
 
                 tbl.getItems().add(new ItemDTO(
                         set.getString("itemid"),
                         set.getString("name"),
                         set.getInt("badgeid"),
-                        set.getInt("qtyonshop"),
+                        set.getInt("qty"),
                         set.getInt("qtyonstock"),
                         set.getString("brand"),
                         set.getDouble("price"),
-                        set.getInt("description")
+                        set.getString("describedetail")
                 ));
             }
 

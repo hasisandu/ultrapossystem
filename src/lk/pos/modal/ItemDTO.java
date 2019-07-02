@@ -8,9 +8,9 @@ public class ItemDTO {
     private int qtyinstock;
     private String brand;
     private double price;
-    private int discribe;
+    private String discribe;
 
-    public ItemDTO(String itemid, String name, int badgeid, int qtyinshop, int qtyinstock, String brand, double price, int discribe) {
+    public ItemDTO(String itemid, String name, int badgeid, int qtyinshop, int qtyinstock, String brand, double price, String discribe) {
         this.itemid = itemid;
         this.name = name;
         this.badgeid = badgeid;
@@ -77,11 +77,11 @@ public class ItemDTO {
         this.price = price;
     }
 
-    public int getDiscribe() {
+    public String getDiscribe() {
         return discribe;
     }
 
-    public void setDiscribe(int discribe) {
+    public void setDiscribe(String discribe) {
         this.discribe = discribe;
     }
 }

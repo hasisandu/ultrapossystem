@@ -127,26 +127,30 @@ public class CustomerReportController implements Initializable {
     void loadcity(KeyEvent event) {
         resulttbl.getItems().clear();
 
-        String searchtxt = asdadsadsdsd.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select customerid,firstname,lastname,address,city,contact from customer where city like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
-            while (set.next()) {
-                resulttbl.getItems().add(new CustomerDTO(
-                        set.getString("customerid"),
-                        set.getString("firstname"),
-                        set.getString("lastname"),
-                        set.getString("contact"),
-                        set.getString("address"),
-                        set.getString("city")
-                ));
-            }
+        if (asdadsadsdsd.getText().equalsIgnoreCase("")) {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            String searchtxt = asdadsadsdsd.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select customerid,firstname,lastname,address,city,contact from customer where city like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+                while (set.next()) {
+                    resulttbl.getItems().add(new CustomerDTO(
+                            set.getString("customerid"),
+                            set.getString("firstname"),
+                            set.getString("lastname"),
+                            set.getString("contact"),
+                            set.getString("address"),
+                            set.getString("city")
+                    ));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -154,26 +158,30 @@ public class CustomerReportController implements Initializable {
     void loadset(KeyEvent event) {
         resulttbl.getItems().clear();
 
-        String searchtxt = txtsearchname.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select customerid,firstname,lastname,address,city,contact from customer where customerid like" + searchtxt + " || city like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
-            while (set.next()) {
-                resulttbl.getItems().add(new CustomerDTO(
-                        set.getString("customerid"),
-                        set.getString("firstname"),
-                        set.getString("lastname"),
-                        set.getString("contact"),
-                        set.getString("address"),
-                        set.getString("city")
-                ));
-            }
+        if (txtsearchname.getText().equalsIgnoreCase("")) {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            String searchtxt = txtsearchname.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select customerid,firstname,lastname,address,city,contact from customer where customerid like" + searchtxt + " || city like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+                while (set.next()) {
+                    resulttbl.getItems().add(new CustomerDTO(
+                            set.getString("customerid"),
+                            set.getString("firstname"),
+                            set.getString("lastname"),
+                            set.getString("contact"),
+                            set.getString("address"),
+                            set.getString("city")
+                    ));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -129,27 +129,31 @@ public class SupplierReportController implements Initializable {
     void get(KeyEvent event) {
         tbl.getItems().clear();
 
-        String searchtxt = suplytxt.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
-            while (set.next()) {
-                tbl.getItems().add(new SuplierTM(
-                        set.getString("suplierid"),
-                        set.getString("firstname"),
-                        set.getString("lastname"),
-                        set.getString("city"),
-                        set.getString("contact"),
-                        set.getString("address"),
-                        set.getString("company")
-                ));
-            }
+        if (suplytxt.getText().equalsIgnoreCase("")) {
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+        } else {
+            String searchtxt = suplytxt.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+                while (set.next()) {
+                    tbl.getItems().add(new SuplierTM(
+                            set.getString("suplierid"),
+                            set.getString("firstname"),
+                            set.getString("lastname"),
+                            set.getString("city"),
+                            set.getString("contact"),
+                            set.getString("address"),
+                            set.getString("company")
+                    ));
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
     }
 

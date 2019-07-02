@@ -328,10 +328,10 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="debdesCount" fill="#44bd32" layoutX="860.0" layoutY="70.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="113.04589843749989">
+             <Text fx:id="debdesCount" fill="#44bd32" layoutX="852.0" layoutY="72.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="Not Available" textAlignment="CENTER" wrappingWidth="171.0458984374999">
                <font>
-                  <Font name="System Bold" size="41.0" />
+                   <Font name="System Bold" size="17.0"/>
                </font>
                  <cursor>
                      <Cursor fx:constant="HAND"/>

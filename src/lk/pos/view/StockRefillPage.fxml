@@ -121,5 +121,14 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
+        <JFXButton buttonType="RAISED" layoutX="904.0" layoutY="461.0" onMouseClicked="#loadnewBrand" prefHeight="31.0"
+                   prefWidth="110.0" style="-fx-background-color: #0B6EF2;" text="New Brand" textFill="WHITE">
+            <font>
+                <Font size="13.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
     </children>
 </AnchorPane>

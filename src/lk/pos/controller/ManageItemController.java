@@ -178,7 +178,7 @@ public class ManageItemController implements Initializable {
     }
 
     public void update() {
-        String sql = "update shop set qty=? where id=?";
+        String sql = "update shop set qty=(qty+?) where id=?";
         try {
             boolean updated = CrudUtill.executeUpdate(sql, Integer.parseInt(txtqty.getText()), txtitemid.getText());
             if (updated) {

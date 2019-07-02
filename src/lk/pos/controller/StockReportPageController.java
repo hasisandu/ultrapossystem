@@ -146,7 +146,7 @@ public class StockReportPageController implements Initializable {
 
         String searchtxt = txtitem.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select I.itemid,I.brand,I.name,I.qtyonshop,S.qtyonstock,I.price,I.badgeid,I.description from item i join stock s on i.itemid=s.itemid && i.itemid like" + searchtxt + " || i.brand like" + searchtxt + " || i.name like" + searchtxt + " || i.description like" + searchtxt + "";
+        String sql = "select a.itemid,a.brand,a.name,a.qtyonshop,b.qty,b.id,a.price,a.badgeid,a.description from stock a join shop b on b.id=a.itemid && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.description like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
             while (set.next()) {
@@ -159,7 +159,7 @@ public class StockReportPageController implements Initializable {
                         set.getInt("badgeid"),
                         set.getString("name"),
                         set.getString("brand"),
-                        set.getInt("qtyonstock"),
+                        set.getInt("qty"),
                         set.getDouble("price"),
                         set.getString("description"),
                         set.getInt("qtyonstock")

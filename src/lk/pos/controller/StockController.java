@@ -1,15 +1,20 @@
 package lk.pos.controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.TM.ItemTM;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -196,33 +201,37 @@ public class StockController implements Initializable {
     @FXML
     void released(KeyEvent event) {
 
-        srchtble1.getItems().clear();
+        if (txtsearch.getText().equalsIgnoreCase("")) {
 
-        String searchtxt = txtsearch.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select itemid,brand,name,qtyonstock,price,badgeid,describedetail from stock where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || describedetail like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
+        } else {
+            srchtble1.getItems().clear();
 
-            while (set.next()) {
-                srchtble1.getItems().add(new ItemTM(
-                        set.getString("itemid"),
-                        set.getString("name"),
-                        set.getString("brand"),
-                        set.getInt("badgeid"),
-                        set.getInt("qtyonstock"),
-                        set.getDouble("price")
+            String searchtxt = txtsearch.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select itemid,brand,name,qtyonstock,price,badgeid,describedetail from stock where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || describedetail like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
 
-                ));
+                while (set.next()) {
+                    srchtble1.getItems().add(new ItemTM(
+                            set.getString("itemid"),
+                            set.getString("name"),
+                            set.getString("brand"),
+                            set.getInt("badgeid"),
+                            set.getInt("qtyonstock"),
+                            set.getDouble("price")
+
+                    ));
+                }
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
 
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
-
     }
 
     private void initcusid() {
@@ -299,6 +308,19 @@ public class StockController implements Initializable {
 
         }
 
+    }
+
+    @FXML
+    void loadnewBrand(MouseEvent event) {
+        try {
+            Parent root = FXMLLoader.load(getClass().getResource("../view/brands.fxml"));
+            Scene s = new Scene(root);
+            Stage stage = new Stage();
+            stage.setScene(s);
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

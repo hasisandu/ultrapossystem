@@ -11,61 +11,61 @@
    <children>
       <ImageView fitHeight="24.0" fitWidth="28.0" layoutX="173.0" layoutY="245.0" pickOnBounds="true">
          <image>
-            <Image url="@../image/icons8_receive_cash_filled_50px_1.png"/>
+             <Image url="@../image/icons8_receive_cash_filled_50px_1.png"/>
          </image>
       </ImageView>
       <AnchorPane prefHeight="513.0" prefWidth="171.0" style="-fx-background-color: #130f40;">
          <children>
-            <Hyperlink layoutX="2.0" layoutY="14.0" onMouseClicked="#loadCustomerReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Customers" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="14.0" onMouseClicked="#loadCustomerReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Customers" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="47.0" onMouseClicked="#loadImageReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Items" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="47.0" onMouseClicked="#loadImageReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Items" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="83.0" onMouseClicked="#loadOrdersReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Orders" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="83.0" onMouseClicked="#loadOrdersReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Orders" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="117.0" onMouseClicked="#loadExternalReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="External Imports" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="117.0" onMouseClicked="#loadExternalReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="External Imports" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="152.0" onMouseClicked="#loadSellingReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Seling Payment" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="152.0" onMouseClicked="#loadSellingReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Seling Payment" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="186.0" onMouseClicked="#loadSupliersReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Suppliers" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="186.0" onMouseClicked="#loadSupliersReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Suppliers" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="220.0" onMouseClicked="#loadStockReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Stock" textFill="WHITE">
+             <Hyperlink disable="true" layoutX="2.0" layoutY="220.0" onMouseClicked="#loadStockReportPage"
+                        prefHeight="24.0" prefWidth="161.0" text="Stock" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
-            <Hyperlink layoutX="2.0" layoutY="255.0" onMouseClicked="#loadBuyReportPage" prefHeight="24.0"
-                       prefWidth="161.0" text="Buy Payment" textFill="WHITE">
+             <Hyperlink layoutX="2.0" layoutY="255.0" onMouseClicked="#loadBuyReportPage" prefHeight="24.0"
+                        prefWidth="161.0" text="Buy Payment" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="13.0"/>
+                   <Font name="System Bold" size="13.0"/>
                </font>
             </Hyperlink>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="display" layoutX="173.0" prefHeight="513.0" prefWidth="857.0"/>
+       <AnchorPane fx:id="display" layoutX="173.0" prefHeight="513.0" prefWidth="857.0"/>
    </children>
 </AnchorPane>
