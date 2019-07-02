@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ExternalImportController implements Initializable {
 
@@ -79,23 +81,40 @@ public class ExternalImportController implements Initializable {
     @FXML
     void saveimports(MouseEvent event) {
 
-        String sql = "INSERT INTO otherbuy(reason,date,time,price) VALUES('" + description.getText() + "',now(),now()," + Double.parseDouble(cost.getText()) + ")";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql);
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Has been Saved !", ButtonType.CLOSE).show();
-                clearAll();
+        String txtqtys = cost.getText();
+        String dis = description.getText();
+
+        Pattern pqty = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+        Pattern pdis = Pattern.compile("[a-zA-Z0-9., ]{10,400}");
+
+        Matcher mqty = pqty.matcher(txtqtys);
+        Matcher mdis = pdis.matcher(dis);
+
+        boolean bqty = mqty.matches();
+        boolean bdis = mdis.matches();
+
+        if (bqty && bdis) {
+            String sql = "INSERT INTO otherbuy(reason,date,time,price) VALUES('" + description.getText() + "',now(),now()," + Double.parseDouble(cost.getText()) + ")";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql);
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer Has been Saved !", ButtonType.CLOSE).show();
+                    clearAll();
+                    loadTable();
+                }
+            } catch (SQLException e) {
                 loadTable();
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                loadTable();
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            loadTable();
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            loadTable();
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
 
     }
 

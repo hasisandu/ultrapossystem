@@ -216,16 +216,17 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </ImageView>
-             <Text layoutX="909.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasika Sandaruwan"/>
+             <Text layoutX="909.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultra Stationers"/>
              <Separator layoutX="827.0" layoutY="8.0" orientation="VERTICAL" prefHeight="46.0" prefWidth="0.0"
                         style="-fx-background-color: gray;"/>
-             <Text fill="#2980b9" layoutX="174.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0"
+             <Text fx:id="txtdate" fill="#2980b9" layoutX="174.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="2019-01-20">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#2980b9" layoutX="322.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="08:20:22">
+             <Text fx:id="txttime" fill="#2980b9" layoutX="322.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0"
+                   text="08:20:22">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

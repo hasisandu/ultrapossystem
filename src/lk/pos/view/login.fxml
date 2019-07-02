@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="382.0"
+            prefWidth="632.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="lk.pos.controller.LoginController">
+    <children>
+        <ImageView fitHeight="382.0" fitWidth="632.0" pickOnBounds="true">
+            <image>
+                <Image url="@../image/Capture.JPG"/>
+            </image>
+        </ImageView>
+        <Text fill="WHITE" fontSmoothingType="LCD" layoutX="420.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0"
+              text="Login">
+            <font>
+                <Font name="System Bold" size="22.0"/>
+            </font>
+        </Text>
+        <JFXTextField fx:id="username" focusColor="WHITE" labelFloat="true" layoutX="334.0" layoutY="120.0"
+                      prefHeight="25.0" prefWidth="209.0" promptText="User Name Here"
+                      style="-fx-background-color: white;" unFocusColor="WHITE">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXTextField>
+        <JFXPasswordField fx:id="password" focusColor="WHITE" labelFloat="true" layoutX="334.0" layoutY="179.0"
+                          prefHeight="25.0" prefWidth="209.0" promptText="Password Here"
+                          style="-fx-background-color: white;" unFocusColor="WHITE">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </JFXPasswordField>
+        <JFXButton buttonType="RAISED" layoutX="334.0" layoutY="235.0" onMouseClicked="#login" prefHeight="31.0"
+                   prefWidth="209.0" style="-fx-background-color: #0B6EF2;" text="Login" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="14.0"/>
+            </font>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
+        </JFXButton>
+    </children>
+</AnchorPane>

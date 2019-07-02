@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SellingPriceController implements Initializable {
     @Override
@@ -85,39 +87,69 @@ public class SellingPriceController implements Initializable {
     @FXML
     void Save(MouseEvent event) {
 
-        Date d1 = new Date();
-        SimpleDateFormat sd1 = new SimpleDateFormat("YYYY-MM-dd");
-        String x1 = sd1.format(d1);
 
-        Date d2 = new Date();
-        SimpleDateFormat sd2 = new SimpleDateFormat("HH:mm:ss");
-        String x2 = sd2.format(d2);
+        String sorderid = txtorderid.getText();
+        String srest = txtrest.getText();
+        String samount = txtamount.getText();
+        String sbalance = txtbalance.getText();
 
-        String type = "Cash";
-        if (b.isSelected()) {
-            type = "Check";
-        }
+        Pattern porderid = Pattern.compile("[0-9]");
+        Pattern prest = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+        Pattern pamount = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+        Pattern pbalance = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
 
+        Matcher morderid = porderid.matcher(sorderid);
+        Matcher mrest = prest.matcher(srest);
+        Matcher mamount = pamount.matcher(samount);
+        Matcher mbalance = pbalance.matcher(sbalance);
 
-        String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+        boolean borderid = morderid.matches();
+        boolean brest = mrest.matches();
+        boolean bamount = mamount.matches();
+        boolean bbalance = mbalance.matches();
+
+        if (borderid && brest && bamount && bbalance) {
+            Date d1 = new Date();
+            SimpleDateFormat sd1 = new SimpleDateFormat("YYYY-MM-dd");
+            String x1 = sd1.format(d1);
+
+            Date d2 = new Date();
+            SimpleDateFormat sd2 = new SimpleDateFormat("HH:mm:ss");
+            String x2 = sd2.format(d2);
+
+            String type = "Cash";
+            if (b.isSelected()) {
+                type = "Check";
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+
+
+            String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            }
+
+            txtorderid.setText("");
+            txtrest.setText("");
+            txtamount.setText("");
+            txtbalance.setText("");
+            search.setText("");
+
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Some Fields With Wrong..", ButtonType.OK).show();
         }
 
-        txtorderid.setText("");
-        txtrest.setText("");
-        txtamount.setText("");
-        txtbalance.setText("");
-        search.setText("");
+
+
+
 
     }
 
@@ -211,19 +243,23 @@ public class SellingPriceController implements Initializable {
 
     @FXML
     void getbalance(KeyEvent event) {
-        double insertamount = 0.00;
-        double balance = 0.00;
-
-        if (txtamount.getText().equalsIgnoreCase("")) {
-            btn.setDisable(true);
+        if (txtrest.getText().equalsIgnoreCase("")) {
+            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Select An Order", ButtonType.OK).show();
         } else {
-            balance = Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText());
-            btn.setDisable(false);
-            if (balance >= 0) {
-                txtbalance.setText(balance + "");
-            } else {
-                txtbalance.setText(balance + "");
+            double insertamount = 0.00;
+            double balance = 0.00;
+
+            if (txtamount.getText().equalsIgnoreCase("")) {
                 btn.setDisable(true);
+            } else {
+                balance = Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText());
+                btn.setDisable(false);
+                if (balance >= 0) {
+                    txtbalance.setText(balance + "");
+                } else {
+                    txtbalance.setText(balance + "");
+                    btn.setDisable(true);
+                }
             }
         }
     }

@@ -13,6 +13,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class SuplierController implements Initializable {
     @Override
@@ -162,40 +164,113 @@ public class SuplierController implements Initializable {
     @FXML
     void savesup(MouseEvent event) {
 
-        String sql = "INSERT INTO suplier VALUE(?,?,?,?,?,?,?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, sid.getText(), fname.getText(), lname.getText(), city.getText(), contact.getText(), addre.getText(), comany.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Supplier Has been Saved !", ButtonType.CLOSE).show();
-                clerll();
+        String txtfname = fname.getText();
+        String txtlname = lname.getText();
+        String txtcontact = contact.getText();
+        String txtcity = city.getText();
+        String txtaddress = addre.getText();
+        String txtcompany = comany.getText();
+
+        Pattern pfname = Pattern.compile("[a-zA-Z]{3,15}");
+        Pattern plname = Pattern.compile("[a-zA-Z]{3,15}");
+        Pattern pcontact = Pattern.compile("[0-9]{10}");
+        Pattern pcity = Pattern.compile("[a-zA-Z]{3,15}");
+        Pattern paddress = Pattern.compile("[a-z0-9/-:A-z ]{3,400}");
+        Pattern pcompany = Pattern.compile("[a-zA-Z]{3,40}");
+
+
+        Matcher mfname = pfname.matcher(txtfname);
+        Matcher mlname = plname.matcher(txtlname);
+        Matcher mcontact = pcontact.matcher(txtcontact);
+        Matcher mcity = pcity.matcher(txtcity);
+        Matcher maddress = paddress.matcher(txtaddress);
+        Matcher mcompany = pcompany.matcher(txtcompany);
+
+        boolean bmname = mfname.matches();
+        boolean blname = mlname.matches();
+        boolean bcontact = mcontact.matches();
+        boolean bcity = mcity.matches();
+        boolean baddress = maddress.matches();
+        boolean bcompany = mcompany.matches();
+
+        if (bmname && blname && bcontact && bcity && baddress && bcompany) {
+
+            System.out.println("ok");
+            String sql = "INSERT INTO suplier VALUE(?,?,?,?,?,?,?)";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, sid.getText(), fname.getText(), lname.getText(), city.getText(), contact.getText(), addre.getText(), comany.getText());
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Supplier Has been Saved !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
+        } else {
+
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
+
 
     }
 
     @FXML
     void updatesup(MouseEvent event) {
 
-        String sql = "update suplier set firstname=?,lastname=?, address=?,city=?,contact=?,company=? where suplierid=?";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, fname.getText(), lname.getText(), city.getText(), contact.getText(), addre.getText(), comany.getText(), sid.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Supplier Has been Updated !", ButtonType.CLOSE).show();
-                clerll();
+        String txtfname = fname.getText();
+        String txtlname = lname.getText();
+        String txtcontact = contact.getText();
+        String txtcity = city.getText();
+        String txtaddress = addre.getText();
+        String txtcompany = comany.getText();
+
+        Pattern pfname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern plname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern pcontact = Pattern.compile("[0-9]{10}");
+        Pattern pcity = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern paddress = Pattern.compile("[a-z0-9/-:A-z ]{3,400}");
+        Pattern pcompany = Pattern.compile("[a-zA-z]{3,40}");
+
+
+        Matcher mfname = pfname.matcher(txtfname);
+        Matcher mlname = plname.matcher(txtlname);
+        Matcher mcontact = pcontact.matcher(txtcontact);
+        Matcher mcity = pcity.matcher(txtcity);
+        Matcher maddress = paddress.matcher(txtaddress);
+        Matcher mcompany = pcompany.matcher(txtcompany);
+
+        boolean bmname = mfname.matches();
+        boolean blname = mlname.matches();
+        boolean bcontact = mcontact.matches();
+        boolean bcity = mcity.matches();
+        boolean baddress = maddress.matches();
+        boolean bcompany = mcompany.matches();
+
+        if (bmname && blname && bcontact && bcity && baddress && bcompany) {
+            String sql = "update suplier set firstname=?,lastname=?, address=?,city=?,contact=?,company=? where suplierid=?";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, fname.getText(), lname.getText(), city.getText(), contact.getText(), addre.getText(), comany.getText(), sid.getText());
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Supplier Has been Updated !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+        } else {
+
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
     }
 
     @FXML

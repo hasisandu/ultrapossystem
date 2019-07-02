@@ -83,23 +83,27 @@ public class brandController implements Initializable {
 
     @FXML
     void save(MouseEvent event) {
-        String sql = "INSERT INTO brand (brandname) VALUES(?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, txtbrandname.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
+        if (txtbrandname.getText().equalsIgnoreCase("")) {
+            new Alert(Alert.AlertType.WARNING, "Enter A Name !", ButtonType.CLOSE).show();
+        } else {
+            String sql = "INSERT INTO brand (brandname) VALUES(?)";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, txtbrandname.getText());
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
 
-                txtbrandname.setText("");
-                brandidttxt.setText("");
-                searchtxtbar.setText("");
-                tbl.getItems().clear();
+                    txtbrandname.setText("");
+                    brandidttxt.setText("");
+                    searchtxtbar.setText("");
+                    tbl.getItems().clear();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
         }
     }
 

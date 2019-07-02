@@ -16,6 +16,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CustomerViewController implements Initializable {
 
@@ -136,38 +138,104 @@ public class CustomerViewController implements Initializable {
 
     @FXML
     void saveCustomer(MouseEvent event) {
-        String sql = "INSERT INTO customer VALUE(?,?,?,?,?,?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, customerid.getText(), firstname.getText(), lastname.getText(), contact.getText(), address.getText(), city.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Has been Saved !", ButtonType.CLOSE).show();
-                clerll();
+
+        String txtfname = firstname.getText();
+        String txtlname = lastname.getText();
+        String txtcontact = contact.getText();
+        String txtcity = city.getText();
+        String txtaddress = address.getText();
+
+        Pattern pfname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern plname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern pcontact = Pattern.compile("[0-9]{10}");
+        Pattern pcity = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern paddress = Pattern.compile("[a-z0-9/-:A-z ]{3,400}");
+
+
+        Matcher mfname = pfname.matcher(txtfname);
+        Matcher mlname = plname.matcher(txtlname);
+        Matcher mcontact = pcontact.matcher(txtcontact);
+        Matcher mcity = pcity.matcher(txtcity);
+        Matcher maddress = paddress.matcher(txtaddress);
+
+        boolean bmname = mfname.matches();
+        boolean blname = mlname.matches();
+        boolean bcontact = mcontact.matches();
+        boolean bcity = mcity.matches();
+        boolean baddress = maddress.matches();
+
+        if (bmname && blname && bcontact && bcity && baddress) {
+            String sql = "INSERT INTO customer VALUE(?,?,?,?,?,?)";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, customerid.getText(), firstname.getText(), lastname.getText(), contact.getText(), address.getText(), city.getText());
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer Has been Saved !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
     }
 
     @FXML
     void updateCustomer(MouseEvent event) {
-        String sql = "UPDATE customer SET firstname=?, lastname=?, contact=?, city=?, address=? WHERE customerid=?";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, firstname.getText(), lastname.getText(), contact.getText(), city.getText(), address.getText(), customerid.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Customer Has been Updated !", ButtonType.CLOSE).show();
-                clerll();
+
+        String txtfname = firstname.getText();
+        String txtlname = lastname.getText();
+        String txtcontact = contact.getText();
+        String txtcity = city.getText();
+        String txtaddress = address.getText();
+
+        Pattern pfname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern plname = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern pcontact = Pattern.compile("[0-9]{10}");
+        Pattern pcity = Pattern.compile("[a-zA-z]{3,15}");
+        Pattern paddress = Pattern.compile("[a-z0-9/-:A-z ]{3,400}");
+
+
+        Matcher mfname = pfname.matcher(txtfname);
+        Matcher mlname = plname.matcher(txtlname);
+        Matcher mcontact = pcontact.matcher(txtcontact);
+        Matcher mcity = pcity.matcher(txtcity);
+        Matcher maddress = paddress.matcher(txtaddress);
+
+        boolean bmname = mfname.matches();
+        boolean blname = mlname.matches();
+        boolean bcontact = mcontact.matches();
+        boolean bcity = mcity.matches();
+        boolean baddress = maddress.matches();
+
+        if (bmname && blname && bcontact && bcity && baddress) {
+            String sql = "UPDATE customer SET firstname=?, lastname=?, contact=?, city=?, address=? WHERE customerid=?";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, firstname.getText(), lastname.getText(), contact.getText(), city.getText(), address.getText(), customerid.getText());
+                if (saved) {
+                    new Alert(Alert.AlertType.INFORMATION, "Customer Has been Updated !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//            e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-//            e.printStackTrace();
+        } else {
+
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
+
+
+
+
     }
 
     private void initcusid() {

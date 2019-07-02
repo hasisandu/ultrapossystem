@@ -19,6 +19,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StockController implements Initializable {
     @Override
@@ -26,6 +28,7 @@ public class StockController implements Initializable {
 
         initcusid();
         loadBrandset();
+        loadnewBadge();
 
         colid1.setStyle("-fx-alignment:center");
         colproduct1.setStyle("-fx-alignment:center");
@@ -41,6 +44,9 @@ public class StockController implements Initializable {
         colqty1.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colprice1.setCellValueFactory(new PropertyValueFactory<>("price"));
 
+    }
+
+    private void loadnewBadge() {
     }
 
     private void loadBrandset() {
@@ -162,50 +168,110 @@ public class StockController implements Initializable {
 
     @FXML
     void saveItem(MouseEvent event) {
-        String sql = "INSERT INTO stock VALUES(?,?,?,?,?,?,?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, itemidtxt.getText(), txtbadgeid.getText(), txtproductname.getText(), txtbrand.getSelectionModel().getSelectedItem(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), txtalldescribe.getText());
-            if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
-                clerll();
+        if (txtbrand.getSelectionModel().getSelectedItem() != null) {
+            String txtbrands = txtbrand.getSelectionModel().getSelectedItem();
+            String txtpname = txtproductname.getText();
+            String txtqtyon = txtqty.getText();
+            String txtprce = txtprice.getText();
+
+            Pattern ptxtbrand = Pattern.compile("[a-zA-z0-9]{3,25}");
+            Pattern ptxtname = Pattern.compile("[a-zA-z0-9]{3,25}");
+            Pattern ptxtqty = Pattern.compile("[0-9]{1,4}");
+            Pattern ptxtprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+
+
+            Matcher mtxtbrand = ptxtbrand.matcher(txtbrands);
+            Matcher mtxtname = ptxtname.matcher(txtpname);
+            Matcher mtxtqty = ptxtqty.matcher(txtqtyon);
+            Matcher mprice = ptxtprice.matcher(txtprce);
+
+            boolean btxtbrand = mtxtbrand.matches();
+            boolean btxtname = mtxtname.matches();
+            boolean btxtqty = mtxtqty.matches();
+            boolean bprice = mprice.matches();
+
+            if (btxtbrand && btxtname && btxtqty && bprice) {
+                String sql = "INSERT INTO stock VALUES(?,?,?,?,?,?,?)";
+                try {
+                    boolean saved = CrudUtill.executeUpdate(sql, itemidtxt.getText(), txtbadgeid.getText(), txtproductname.getText(), txtbrand.getSelectionModel().getSelectedItem(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), txtalldescribe.getText());
+                    if (saved) {
+                        new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
+                        clerll();
+                    }
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.WARNING, "Select A brand !", ButtonType.CLOSE).show();
         }
+
     }
 
     @FXML
     void updateItem(MouseEvent event) {
 
-        String sql = "update stock set brand=?, name=?, qtyonstock=?, price=?, badgeid=?, describedetail=? where itemid=?";
-        try {
-            boolean updated = CrudUtill.executeUpdate(sql, txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), txtalldescribe.getText(), itemidtxt.getText());
-            if (updated) {
-                new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
-                clerll();
+        if (txtbrand.getSelectionModel().getSelectedItem() != null) {
+            String txtbrands = txtbrand.getSelectionModel().getSelectedItem();
+            String txtpname = txtproductname.getText();
+            String txtqtyon = txtqty.getText();
+            String txtprce = txtprice.getText();
+
+            Pattern ptxtbrand = Pattern.compile("[a-zA-Z0-9]{3,25}");
+            Pattern ptxtname = Pattern.compile("[a-zA-Z0-9]{3,25}");
+            Pattern ptxtqty = Pattern.compile("[0-9]{1,4}");
+            Pattern ptxtprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+
+
+            Matcher mtxtbrand = ptxtbrand.matcher(txtbrands);
+            Matcher mtxtname = ptxtname.matcher(txtpname);
+            Matcher mtxtqty = ptxtqty.matcher(txtqtyon);
+            Matcher mprice = ptxtprice.matcher(txtprce);
+
+            boolean btxtbrand = mtxtbrand.matches();
+            boolean btxtname = mtxtname.matches();
+            boolean btxtqty = mtxtqty.matches();
+            boolean bprice = mprice.matches();
+
+            if (btxtbrand && btxtname && btxtqty && bprice) {
+                String sql = "update stock set brand=?, name=?, qtyonstock=?, price=?, badgeid=?, describedetail=? where itemid=?";
+                try {
+                    boolean updated = CrudUtill.executeUpdate(sql, txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), txtalldescribe.getText(), itemidtxt.getText());
+                    if (updated) {
+                        new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
+                        clerll();
+                    }
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Select A Brand Name", ButtonType.CLOSE).show();
         }
+
+
 
     }
 
     @FXML
     void released(KeyEvent event) {
+        srchtble1.getItems().clear();
 
         if (txtsearch.getText().equalsIgnoreCase("")) {
 
         } else {
-            srchtble1.getItems().clear();
-
             String searchtxt = txtsearch.getText();
             searchtxt = "'" + searchtxt + "%'";
             String sql = "select itemid,brand,name,qtyonstock,price,badgeid,describedetail from stock where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || describedetail like" + searchtxt + "";
@@ -294,16 +360,28 @@ public class StockController implements Initializable {
 
         if (event.getCode() == KeyCode.ENTER) {
 
-            if (txtalldescribe.getText().equalsIgnoreCase("")) {
-                String x;
-                x = txtdescribe.getText();
-                txtalldescribe.setText(x);
-                txtdescribe.setText("");
+            String txtdis = txtdescribe.getText();
+
+            Pattern ptxtdis = Pattern.compile("[a-zA-z0-9,. ]{3,50}");
+
+            Matcher mdis = ptxtdis.matcher(txtdis);
+
+            boolean bmname = mdis.matches();
+
+            if (bmname) {
+                if (txtalldescribe.getText().equalsIgnoreCase("")) {
+                    String x;
+                    x = txtdescribe.getText();
+                    txtalldescribe.setText(x);
+                    txtdescribe.setText("");
+                } else {
+                    String x = txtalldescribe.getText();
+                    x = x + " ,\n" + txtdescribe.getText();
+                    txtalldescribe.setText(x);
+                    txtdescribe.setText("");
+                }
             } else {
-                String x = txtalldescribe.getText();
-                x = x + " ,\n" + txtdescribe.getText();
-                txtalldescribe.setText(x);
-                txtdescribe.setText("");
+                new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
             }
 
         }

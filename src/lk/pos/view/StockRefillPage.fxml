@@ -28,7 +28,7 @@
                 </TextField>
             </children>
         </AnchorPane>
-        <TextField fx:id="itemidtxt" layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
+        <TextField fx:id="itemidtxt" editable="false" layoutX="25.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
                    promptText="Item ID">
             <font>
                 <Font size="14.0"/>
@@ -90,8 +90,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <TextField fx:id="txtbadgeid" layoutX="315.0" layoutY="109.0" prefHeight="31.0" prefWidth="134.0"
-                   promptText="Badge ID">
+        <TextField fx:id="txtbadgeid" disable="true" editable="false" layoutX="315.0" layoutY="109.0" prefHeight="31.0"
+                   prefWidth="134.0" promptText="Badge ID">
             <font>
                 <Font size="14.0"/>
             </font>

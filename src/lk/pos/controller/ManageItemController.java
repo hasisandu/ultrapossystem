@@ -15,6 +15,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class ManageItemController implements Initializable {
     @Override
@@ -146,27 +148,43 @@ public class ManageItemController implements Initializable {
 
     @FXML
     void saveItems(MouseEvent event) {
-        String sql = "INSERT INTO shop VALUES(?,?)";
-        try {
-            boolean saved = CrudUtill.executeUpdate(sql, txtitemid.getText(), Integer.parseInt(txtqty.getText()));
-            if (saved) {
 
-                String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
-                boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
-                if (saved2) {
-                    new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
-                    clerll();
+
+        String txtqtys = txtqty.getText();
+
+        Pattern pqty = Pattern.compile("[0-9]{1,4}");
+
+        Matcher mqty = pqty.matcher(txtqtys);
+
+        boolean bqty = mqty.matches();
+
+        if (bqty) {
+            String sql = "INSERT INTO shop VALUES(?,?)";
+            try {
+                boolean saved = CrudUtill.executeUpdate(sql, txtitemid.getText(), Integer.parseInt(txtqty.getText()));
+                if (saved) {
+
+                    String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
+                    boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
+                    if (saved2) {
+                        new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
+                        clerll();
+                    }
+
                 }
-
-            }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
 //           update();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            }
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
+
     }
 
     @FXML
@@ -178,27 +196,42 @@ public class ManageItemController implements Initializable {
     }
 
     public void update() {
-        String sql = "update shop set qty=(qty+?) where id=?";
-        try {
-            boolean updated = CrudUtill.executeUpdate(sql, Integer.parseInt(txtqty.getText()), txtitemid.getText());
-            if (updated) {
 
-                String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
-                boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
-                if (saved2) {
-                    new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
-                    clerll();
+        String txtqtys = txtqty.getText();
+
+        Pattern pqty = Pattern.compile("[0-9]{1,4}");
+
+        Matcher mqty = pqty.matcher(txtqtys);
+
+        boolean bqty = mqty.matches();
+
+        if (bqty) {
+            String sql = "update shop set qty=(qty+?) where id=?";
+            try {
+                boolean updated = CrudUtill.executeUpdate(sql, Integer.parseInt(txtqty.getText()), txtitemid.getText());
+                if (updated) {
+
+                    String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
+                    boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
+                    if (saved2) {
+                        new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
+                        clerll();
+                    }
+
+
                 }
-
-
+            } catch (SQLException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-            e.printStackTrace();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
+
+
     }
 
 //    private void initcusid() {
