@@ -23,6 +23,12 @@ public class CustomerViewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initcusid();
+
+        colcusid.setStyle("-fx-alignment:center");
+        colfname.setStyle("-fx-alignment:center");
+        collname.setStyle("-fx-alignment:center");
+        contact1.setStyle("-fx-alignment:center");
+
         colcusid.setCellValueFactory(new PropertyValueFactory<>("customerid"));
         colfname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         collname.setCellValueFactory(new PropertyValueFactory<>("lastname"));

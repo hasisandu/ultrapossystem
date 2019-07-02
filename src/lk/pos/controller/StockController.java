@@ -22,6 +22,13 @@ public class StockController implements Initializable {
         initcusid();
         loadBrandset();
 
+        colid1.setStyle("-fx-alignment:center");
+        colproduct1.setStyle("-fx-alignment:center");
+        colbrand1.setStyle("-fx-alignment:center");
+        colbadge1.setStyle("-fx-alignment:center");
+        colqty1.setStyle("-fx-alignment:center");
+        colprice1.setStyle("-fx-alignment:center");
+
         colid1.setCellValueFactory(new PropertyValueFactory<>("itemid"));
         colproduct1.setCellValueFactory(new PropertyValueFactory<>("name"));
         colbrand1.setCellValueFactory(new PropertyValueFactory<>("brand"));

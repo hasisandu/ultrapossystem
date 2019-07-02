@@ -11,7 +11,7 @@
             prefWidth="857.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.ItemReportPageController">
     <children>
-        <Text fill="#0097e6" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Items Reports">
+        <Text fill="#0097e6" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Stock Reports">
             <font>
                 <Font name="System Bold" size="16.0"/>
             </font>

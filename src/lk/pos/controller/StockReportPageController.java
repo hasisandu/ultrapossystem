@@ -9,14 +9,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
-import lk.pos.modal.ItemDTO;
+import lk.pos.modal.StockDTO;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class ItemReportPageController implements Initializable {
+public class StockReportPageController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -32,11 +32,11 @@ public class ItemReportPageController implements Initializable {
         colitemid.setCellValueFactory(new PropertyValueFactory<>("itemid"));
         colitemname.setCellValueFactory(new PropertyValueFactory<>("name"));
         colbadgeid.setCellValueFactory(new PropertyValueFactory<>("badgeid"));
-        colqtyshop.setCellValueFactory(new PropertyValueFactory<>("qtyinshop"));
-        colqtystock.setCellValueFactory(new PropertyValueFactory<>("qtyinstock"));
+        colqtyshop.setCellValueFactory(new PropertyValueFactory<>("qty"));
+        colqtystock.setCellValueFactory(new PropertyValueFactory<>("stockqty"));
         colbrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colprice.setCellValueFactory(new PropertyValueFactory<>("price"));
-        coldescribe.setCellValueFactory(new PropertyValueFactory<>("discribe"));
+        coldescribe.setCellValueFactory(new PropertyValueFactory<>("describe"));
 
     }
 
@@ -45,7 +45,7 @@ public class ItemReportPageController implements Initializable {
     private TextField txtitem;
 
     @FXML
-    private TableView<ItemDTO> tbl;
+    private TableView<StockDTO> tbl;
 
     @FXML
     private TableColumn<?, ?> colitemid;
@@ -154,15 +154,15 @@ public class ItemReportPageController implements Initializable {
                 System.out.println(set.getInt("qtyonstock"));
                 System.out.println(set.getString("description"));
 
-                tbl.getItems().add(new ItemDTO(
+                tbl.getItems().add(new StockDTO(
                         set.getString("itemid"),
-                        set.getString("name"),
                         set.getInt("badgeid"),
-                        set.getInt("qtyonshop"),
-                        set.getInt("qtyonstock"),
+                        set.getString("name"),
                         set.getString("brand"),
+                        set.getInt("qtyonstock"),
                         set.getDouble("price"),
-                        set.getInt("description")
+                        set.getString("description"),
+                        set.getInt("qtyonstock")
                 ));
             }
 

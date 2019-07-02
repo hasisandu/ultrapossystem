@@ -19,6 +19,12 @@ public class SuplierController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initsupid();
 
+
+        colcusid.setStyle("-fx-alignment:center");
+        colfname.setStyle("-fx-alignment:center");
+        collname.setStyle("-fx-alignment:center");
+        contact1.setStyle("-fx-alignment:center");
+
         colcusid.setCellValueFactory(new PropertyValueFactory<>("suplierid"));
         colfname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
         collname.setCellValueFactory(new PropertyValueFactory<>("latname"));

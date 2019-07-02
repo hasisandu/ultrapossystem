@@ -1,5 +1,6 @@
 package lk.pos.controller;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,8 +19,16 @@ import java.util.ResourceBundle;
 public class ManageItemController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initcusid();
+//        initcusid();
         loadBrandset();
+
+        colid1.setStyle("-fx-alignment:center");
+        colproduct1.setStyle("-fx-alignment:center");
+        colbrand1.setStyle("-fx-alignment:center");
+        colbadge1.setStyle("-fx-alignment:center");
+        colqty1.setStyle("-fx-alignment:center");
+        colprice1.setStyle("-fx-alignment:center");
+
         colid1.setCellValueFactory(new PropertyValueFactory<>("itemid"));
         colproduct1.setCellValueFactory(new PropertyValueFactory<>("name"));
         colbrand1.setCellValueFactory(new PropertyValueFactory<>("brand"));
@@ -96,7 +105,7 @@ public class ManageItemController implements Initializable {
 
 
     @FXML
-    private ComboBox<String> txtbrand;
+    private TextField txtbrand;
 
     @FXML
     void getSerachedData(KeyEvent event) {
@@ -105,7 +114,7 @@ public class ManageItemController implements Initializable {
 
         String searchtxt = txtsearchbar.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select itemid,brand,name,qtyonshop,price,badgeid,description from item where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || description like" + searchtxt + "";
+        String sql = "select a.itemid,a.brand,a.name,a.qtyonstock,a.price,a.badgeid,a.describedetail from stock a where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || describedetail like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
 
@@ -115,7 +124,7 @@ public class ManageItemController implements Initializable {
                         set.getString("name"),
                         set.getString("brand"),
                         set.getInt("badgeid"),
-                        set.getInt("qtyonshop"),
+                        set.getInt("qtyonstock"),
                         set.getDouble("price")
 
                 ));
@@ -137,15 +146,22 @@ public class ManageItemController implements Initializable {
 
     @FXML
     void saveItems(MouseEvent event) {
-        String sql = "INSERT INTO item VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO shop VALUES(?,?)";
         try {
-            boolean saved = CrudUtill.executeUpdate(sql, txtitemid.getText(), txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), drefreshcription.getText());
+            boolean saved = CrudUtill.executeUpdate(sql, txtitemid.getText(), Integer.parseInt(txtqty.getText()));
             if (saved) {
-                new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
-                clerll();
+
+                String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
+                boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
+                if (saved2) {
+                    new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//           update();
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
             new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
@@ -156,12 +172,25 @@ public class ManageItemController implements Initializable {
     @FXML
     void updateitems(MouseEvent event) {
 
-        String sql = "update item set brand=?, name=?, qtyonshop=?, price=?, badgeid=?, description=? where itemid=?";
+
+        update();
+
+    }
+
+    public void update() {
+        String sql = "update shop set qty=? where id=?";
         try {
-            boolean updated = CrudUtill.executeUpdate(sql, txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), drefreshcription.getText(), txtitemid.getText());
+            boolean updated = CrudUtill.executeUpdate(sql, Integer.parseInt(txtqty.getText()), txtitemid.getText());
             if (updated) {
-                new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
-                clerll();
+
+                String sql2 = "update stock set qtyonstock=(qtyonstock-?) where itemid=?";
+                boolean saved2 = CrudUtill.executeUpdate(sql2, Integer.parseInt(txtqty.getText()), txtitemid.getText());
+                if (saved2) {
+                    new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
+                    clerll();
+                }
+
+
             }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
@@ -170,56 +199,55 @@ public class ManageItemController implements Initializable {
             new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
             e.printStackTrace();
         }
-
     }
 
-    private void initcusid() {
-
-        String itemid = "";
-
-        String sql = "SELECT itemid FROM item ORDER BY itemid DESC LIMIT 1";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
-            if (set.next()) {
-                String tempcusid = set.getString(1);
-                int id = Integer.parseInt(tempcusid.substring(1));
-                id++;
-                itemid = "I" + id;
-            } else {
-                itemid = "I100";
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        String badgeid = "";
-
-        String sql2 = "SELECT badgeid FROM badge ORDER BY badgeid DESC LIMIT 1";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql2);
-            if (set.next()) {
-                int tempbadgeid = set.getInt(1);
-                badgeid = "" + tempbadgeid;
-            } else {
-                badgeid = "1";
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        this.txtitemid.setText(itemid);
-        this.txtbadgeid.setText(badgeid);
-    }
+//    private void initcusid() {
+//
+//        String itemid = "";
+//
+//        String sql = "SELECT itemid FROM item ORDER BY itemid DESC LIMIT 1";
+//        try {
+//            ResultSet set = CrudUtill.executeQuery(sql);
+//            if (set.next()) {
+//                String tempcusid = set.getString(1);
+//                int id = Integer.parseInt(tempcusid.substring(1));
+//                id++;
+//                itemid = "I" + id;
+//            } else {
+//                itemid = "I100";
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        String badgeid = "";
+//
+//        String sql2 = "SELECT badgeid FROM badge ORDER BY badgeid DESC LIMIT 1";
+//        try {
+//            ResultSet set = CrudUtill.executeQuery(sql2);
+//            if (set.next()) {
+//                int tempbadgeid = set.getInt(1);
+//                badgeid = "" + tempbadgeid;
+//            } else {
+//                badgeid = "1";
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//
+//        this.txtitemid.setText(itemid);
+//        this.txtbadgeid.setText(badgeid);
+//    }
 
     private void clerll() {
-        initcusid();
-        txtbrand.getItems().clear();
+//        initcusid();
+        txtbrand.setText("");
         txtproductname.setText("");
         txtqty.setText("");
         txtprice.setText("");
@@ -229,35 +257,47 @@ public class ManageItemController implements Initializable {
 
     private void loadBrandset() {
 
-        try {
-            ResultSet resultSet = CrudUtill.executeQuery("select * from brand");
-            while (resultSet.next()) {
-                txtbrand.getItems().add(resultSet.getString(2));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            ResultSet resultSet = CrudUtill.executeQuery("select * from brand");
+//            while (resultSet.next()) {
+//                txtbrand.getItems().add(resultSet.getString(2));
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
 
     }
+
+    int qtyonstocksvar = 0;
 
     @FXML
     void getItemsbytable(MouseEvent event) {
         String id = srchtble1.getSelectionModel().getSelectedItem().getItemid();
         try {
-            ResultSet set = CrudUtill.executeQuery("select * from item where itemid=?", id);
+            ResultSet set = CrudUtill.executeQuery("select * from stock where itemid=?", id);
+            ResultSet set2 = CrudUtill.executeQuery("select * from shop where id=?", id);
 
             if (set.next()) {
                 txtitemid.setText(set.getString(1));
-                txtbrand.getItems().add(set.getString(2));
+                txtbrand.setText(set.getString(4));
                 txtproductname.setText(set.getString(3));
-                txtqty.setText(set.getInt(4) + "");
-                txtprice.setText(set.getDouble(5) + "");
-                txtbadgeid.setText(set.getInt(6) + "");
+                qtyonstocksvar = set.getInt(5);
+                txtprice.setText(set.getDouble(6) + "");
+                txtbadgeid.setText(set.getInt(2) + "");
                 drefreshcription.setText(set.getString(7));
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Product Has Deleted...", ButtonType.CLOSE).show();
+            }
+
+            if (set2.next()) {
+                txtqty.setText(set2.getInt(2) + "");
+                a.setDisable(true);
+            } else {
+//                new Alert(Alert.AlertType.WARNING, "Imposable! This Product Has Deleted...", ButtonType.CLOSE).show();
+                txtqty.setText("0");
+                a.setDisable(false);
             }
 
         } catch (SQLException e) {
@@ -286,5 +326,30 @@ public class ManageItemController implements Initializable {
 
         }
     }
+
+    @FXML
+    void check(KeyEvent event) {
+        int temp = 0;
+        if (txtqty.getText().equalsIgnoreCase("") || txtqty.getText().equalsIgnoreCase(" ")) {
+
+        } else {
+            temp = Integer.parseInt(txtqty.getText());
+        }
+        if (qtyonstocksvar < temp) {
+            new Alert(Alert.AlertType.WARNING, "Imposable!  There Are No Sufficient QTY", ButtonType.CLOSE).show();
+            a.setDisable(true);
+            s.setDisable(true);
+        } else {
+            a.setDisable(false);
+            s.setDisable(false);
+        }
+    }
+
+
+    @FXML
+    private JFXButton a;
+
+    @FXML
+    private JFXButton s;
 
 }

@@ -87,7 +87,7 @@
             </font>
         </TextField>
         <TextField fx:id="txtbalance" editable="false" layoutX="188.0" layoutY="240.0" prefHeight="31.0"
-                   prefWidth="149.0" promptText="Blance">
+                   prefWidth="149.0" promptText="Balance">
             <font>
                 <Font name="System Italic" size="15.0"/>
             </font>

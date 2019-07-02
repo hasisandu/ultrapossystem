@@ -9,7 +9,7 @@
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
             prefWidth="857.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.SupplierReportController">
     <children>
         <Text fill="#0097e6" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
               text="Suppliers Reports">
@@ -18,29 +18,32 @@
             </font>
         </Text>
         <Separator layoutX="165.0" layoutY="21.0" prefHeight="0.0" prefWidth="690.0"/>
-        <TextField layoutX="14.0" layoutY="49.0" prefHeight="31.0" prefWidth="186.0" promptText="Supplier ID, Name">
+        <TextField fx:id="suplytxt" layoutX="14.0" layoutY="49.0" onKeyReleased="#get" prefHeight="31.0"
+                   prefWidth="186.0" promptText="Supplier ID, Name">
             <font>
                 <Font size="15.0"/>
             </font>
         </TextField>
-        <TextField layoutX="207.0" layoutY="49.0" prefHeight="31.0" prefWidth="131.0" promptText="City">
+        <TextField fx:id="city" layoutX="207.0" layoutY="49.0" onKeyReleased="#getscity" prefHeight="31.0"
+                   prefWidth="131.0" promptText="City">
             <font>
                 <Font size="15.0"/>
             </font>
         </TextField>
-        <TableView layoutX="14.0" layoutY="89.0" prefHeight="262.0" prefWidth="438.0">
+        <TableView fx:id="tbl" layoutX="14.0" layoutY="89.0" onMouseClicked="#getuniq" prefHeight="262.0"
+                   prefWidth="438.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Supplier ID"/>
-                <TableColumn prefWidth="75.0" text="First Name"/>
-                <TableColumn prefWidth="75.0" text="Last Name"/>
-                <TableColumn prefWidth="75.0" text="Contact"/>
-                <TableColumn prefWidth="137.0" text="Address"/>
+                <TableColumn fx:id="colsupid" prefWidth="75.0" text="Supplier ID"/>
+                <TableColumn fx:id="colfname" prefWidth="75.0" text="First Name"/>
+                <TableColumn fx:id="collname" prefWidth="75.0" text="Last Name"/>
+                <TableColumn fx:id="colcontact" prefWidth="75.0" text="Contact"/>
+                <TableColumn fx:id="coladdress" prefWidth="137.0" text="Address"/>
             </columns>
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
-        <JFXButton layoutX="344.0" layoutY="49.0" prefHeight="31.0" prefWidth="109.0"
+        <JFXButton disable="true" layoutX="344.0" layoutY="49.0" prefHeight="31.0" prefWidth="109.0"
                    style="-fx-background-color: #0097e6;" text="Creditor" textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
@@ -49,8 +52,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton alignment="CENTER_RIGHT" layoutX="14.0" layoutY="360.0" prefHeight="63.0" prefWidth="109.0"
-                   style="-fx-background-color: #192a56;" text="Print   " textFill="WHITE">
+        <JFXButton alignment="CENTER_RIGHT" layoutX="14.0" layoutY="360.0" onMouseClicked="#pribt" prefHeight="63.0"
+                   prefWidth="109.0" style="-fx-background-color: #192a56;" text="Print   " textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
@@ -65,39 +68,45 @@
             </image>
         </ImageView>
         <Separator layoutX="462.0" layoutY="31.0" orientation="VERTICAL" prefHeight="463.0" prefWidth="14.0"/>
-        <JFXTextField labelFloat="true" layoutX="476.0" layoutY="49.0" promptText="Supplier Id" unFocusColor="#8a0214">
+        <JFXTextField fx:id="txtsuply" labelFloat="true" layoutX="476.0" layoutY="49.0" promptText="Supplier Id"
+                      unFocusColor="#8a0214">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextField>
-        <JFXTextField labelFloat="true" layoutX="476.0" layoutY="105.0" promptText="First Name" unFocusColor="#8a0214">
+        <JFXTextField fx:id="t" labelFloat="true" layoutX="476.0" layoutY="156.0" promptText="Contact"
+                      unFocusColor="#8a0214">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextField>
-        <JFXTextField labelFloat="true" layoutX="476.0" layoutY="156.0" promptText="Contact" unFocusColor="#8a0214">
+        <JFXTextField fx:id="txtfname" labelFloat="true" layoutX="476.0" layoutY="105.0" promptText="First Name"
+                      unFocusColor="#8a0214">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextField>
-        <JFXTextField labelFloat="true" layoutX="676.0" layoutY="105.0" promptText="Last Name" unFocusColor="#8a0214">
+        <JFXTextField fx:id="txtlname" labelFloat="true" layoutX="676.0" layoutY="105.0" promptText="Last Name"
+                      unFocusColor="#8a0214">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextField>
-        <JFXTextField labelFloat="true" layoutX="676.0" layoutY="156.0" promptText="City" unFocusColor="#8a0214">
+        <JFXTextField fx:id="txtcity" labelFloat="true" layoutX="676.0" layoutY="156.0" promptText="City"
+                      unFocusColor="#8a0214">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextField>
-        <JFXTextArea layoutX="476.0" layoutY="208.0" prefHeight="185.0" prefWidth="371.0" promptText="Address"
-                     unFocusColor="#800606">
+        <JFXTextArea fx:id="txtaddress" layoutX="476.0" layoutY="208.0" prefHeight="185.0" prefWidth="371.0"
+                     promptText="Address" unFocusColor="#800606">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
         </JFXTextArea>
-        <JFXButton alignment="CENTER_RIGHT" layoutX="738.0" layoutY="410.0" prefHeight="63.0" prefWidth="109.0"
-                   style="-fx-background-color: #192a56;" text="Print   " textFill="WHITE">
+        <JFXButton alignment="CENTER_RIGHT" layoutX="738.0" layoutY="410.0" onMouseClicked="#printuniq"
+                   prefHeight="63.0" prefWidth="109.0" style="-fx-background-color: #192a56;" text="Print   "
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>

@@ -131,30 +131,34 @@ public class SellingPriceController implements Initializable {
 
         ordertable.getItems().clear();
 
-        String searchtxt = searchtxtfff.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select * from sellpayment where orderid like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
+        if (searchtxtfff.getText().equalsIgnoreCase("")) {
 
-            while (set.next()) {
-                ordertable.getItems().add(new PaymentTM(
-                        set.getInt(1),
-                        set.getString(2),
-                        set.getInt(3),
-                        set.getString(4),
-                        set.getString(5),
-                        set.getDouble(6),
-                        set.getDouble(6) + "",
-                        set.getDouble(6)
-                ));
+        } else {
+            String searchtxt = searchtxtfff.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select * from sellpayment where orderid like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+
+                while (set.next()) {
+                    ordertable.getItems().add(new PaymentTM(
+                            set.getInt(1),
+                            set.getString(2),
+                            set.getInt(3),
+                            set.getString(4),
+                            set.getString(5),
+                            set.getDouble(6),
+                            set.getDouble(6) + "",
+                            set.getDouble(6)
+                    ));
+                }
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
 
     }
@@ -185,6 +189,7 @@ public class SellingPriceController implements Initializable {
 
             if (set2.next()) {
                 temptotal = set2.getDouble("total");
+                txtorderid.setText(set2.getInt("orderid") + "");
             }
 
         } catch (SQLException e) {
@@ -209,14 +214,16 @@ public class SellingPriceController implements Initializable {
         double insertamount = 0.00;
         double balance = 0.00;
 
-        if (txtamount.getText() == null) {
-
+        if (txtamount.getText().equalsIgnoreCase("")) {
+            btn.setDisable(true);
         } else {
-            balance = Double.parseDouble(txtamount.getText()) - Double.parseDouble(txtamount.getText());
-            if (balance > 0) {
+            balance = Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText());
+            btn.setDisable(false);
+            if (balance >= 0) {
                 txtbalance.setText(balance + "");
             } else {
-                txtbalance.setText("0.00");
+                txtbalance.setText(balance + "");
+                btn.setDisable(true);
             }
         }
     }

@@ -1,5 +1,6 @@
 package lk.pos.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -31,6 +32,22 @@ import java.util.ResourceBundle;
 public class PlaceOrderController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+        colcustomerid.setStyle("-fx-alignment:center");
+        colname.setStyle("-fx-alignment:center");
+        colcontact.setStyle("-fx-alignment:center");
+        coladdress.setStyle("-fx-alignment:center");
+        coltblid.setStyle("-fx-alignment:center");
+        colitemtblename.setStyle("-fx-alignment:center");
+        colordertbldescription.setStyle("-fx-alignment:center");
+        tblqty.setStyle("-fx-alignment:center");
+        colpricetbl.setStyle("-fx-alignment:center");
+        colorderitemid.setStyle("-fx-alignment:center");
+        colordername.setStyle("-fx-alignment:center");
+        colorderdescription.setStyle("-fx-alignment:center");
+        colorderqty.setStyle("-fx-alignment:center");
+        colorderamount.setStyle("-fx-alignment:center");
 
         colcustomerid.setCellValueFactory(new PropertyValueFactory<>("itemid"));
         colname.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -202,6 +219,11 @@ public class PlaceOrderController implements Initializable {
         if (qty.getText().equalsIgnoreCase("")) {
             amount.setText("");
         } else {
+            if (te < Integer.parseInt(qty.getText())) {
+                c.setDisable(true);
+            } else {
+                c.setDisable(false);
+            }
             double tempitemprice = Double.parseDouble(unitprice.getText());
             double tempttl = tempitemprice * Integer.parseInt(qty.getText());
             amount.setText(tempttl + "");
@@ -260,22 +282,27 @@ public class PlaceOrderController implements Initializable {
     }
 
     @FXML
+    private JFXButton c;
+    private int te;
+
+    @FXML
     void getItem(KeyEvent event) {
 
         tblitem.getItems().clear();
 
         String searchtxt = txtorderitemid.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select itemid,brand,name,qtyonshop,price,badgeid,description from item where itemid like" + searchtxt + " || brand like" + searchtxt + " || name like" + searchtxt + " || description like" + searchtxt + "";
+        String sql = "select a.itemid, b.id ,a.brand,a.name,b.qty,a.price,a.badgeid,a.describedetail from stock a join shop b on a.itemid=b.id && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.describedetail like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
 
             while (set.next()) {
+                te = set.getInt("qty");
                 tblitem.getItems().add(new ItemSearchTM(
                         set.getString("itemid"),
                         set.getString("name"),
-                        set.getString("description"),
-                        set.getInt("qtyonshop"),
+                        set.getString("describedetail"),
+                        set.getInt("qty"),
                         set.getDouble("price")
                 ));
             }

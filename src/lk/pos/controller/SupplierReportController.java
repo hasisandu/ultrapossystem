@@ -9,42 +9,43 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
-import lk.pos.modal.CustomerDTO;
+import lk.pos.TM.SuplierTM;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CustomerReportController implements Initializable {
+public class SupplierReportController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
-        colcusid.setStyle("-fx-alignment:center");
+        colsupid.setStyle("-fx-alignment:center");
         colfname.setStyle("-fx-alignment:center");
         collname.setStyle("-fx-alignment:center");
         colcontact.setStyle("-fx-alignment:center");
         coladdress.setStyle("-fx-alignment:center");
 
-        colcusid.setCellValueFactory(new PropertyValueFactory<>("customerid"));
+        colsupid.setCellValueFactory(new PropertyValueFactory<>("suplierid"));
         colfname.setCellValueFactory(new PropertyValueFactory<>("firstname"));
-        collname.setCellValueFactory(new PropertyValueFactory<>("lastname"));
+        collname.setCellValueFactory(new PropertyValueFactory<>("latname"));
         colcontact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         coladdress.setCellValueFactory(new PropertyValueFactory<>("address"));
+
 
     }
 
     @FXML
-    private TextField txtsearchname;
+    private TextField suplytxt;
 
     @FXML
-    private TextField asdadsadsdsd;
+    private TextField city;
 
     @FXML
-    private TableView<CustomerDTO> resulttbl;
+    private TableView<SuplierTM> tbl;
 
     @FXML
-    private TableColumn<?, ?> colcusid;
+    private TableColumn<?, ?> colsupid;
 
     @FXML
     private TableColumn<?, ?> colfname;
@@ -59,16 +60,16 @@ public class CustomerReportController implements Initializable {
     private TableColumn<?, ?> coladdress;
 
     @FXML
-    private JFXTextField txtcusid;
+    private JFXTextField txtsuply;
 
     @FXML
     private JFXTextField txtfname;
 
     @FXML
-    private JFXTextField txtcontact;
+    private JFXTextField txtlname;
 
     @FXML
-    private JFXTextField txtlname;
+    private JFXTextField t;
 
     @FXML
     private JFXTextField txtcity;
@@ -77,35 +78,20 @@ public class CustomerReportController implements Initializable {
     private JFXTextArea txtaddress;
 
     @FXML
-    void Prinddetailwice(MouseEvent event) {
-
-        clearAll();
-
-    }
-
-    private void clearAll() {
-        txtcusid.setText("");
-        txtfname.setText("");
-        txtlname.setText("");
-        txtcontact.setText("");
-        txtcity.setText("");
-        txtaddress.setText("");
-    }
-
-    @FXML
     void getuniq(MouseEvent event) {
 
-        String id = resulttbl.getSelectionModel().getSelectedItem().getCustomerid();
+
+        String id = tbl.getSelectionModel().getSelectedItem().getSuplierid();
         try {
-            ResultSet set = CrudUtill.executeQuery("select * from customer where customerid=?", id);
+            ResultSet set = CrudUtill.executeQuery("select * from suplier where suplierid=?", id);
 
             if (set.next()) {
-                txtcusid.setText(set.getString(1));
+                txtsuply.setText(set.getString(1));
                 txtfname.setText(set.getString(2));
                 txtlname.setText(set.getString(3));
-                txtcontact.setText(set.getString(4));
-                txtcity.setText(set.getString(6));
-                txtaddress.setText(set.getString(5));
+                t.setText(set.getString(5));
+                txtcity.setText(set.getString(4));
+                txtaddress.setText(set.getString(6));
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Customer Has Deleted...", ButtonType.CLOSE).show();
             }
@@ -116,30 +102,47 @@ public class CustomerReportController implements Initializable {
             e.printStackTrace();
         }
 
-    }
-
-    @FXML
-    void loadAlldebtors(MouseEvent event) {
 
     }
 
     @FXML
-    void loadcity(KeyEvent event) {
-        resulttbl.getItems().clear();
+    void pribt(MouseEvent event) {
+        clearAll();
+    }
 
-        String searchtxt = asdadsadsdsd.getText();
+    @FXML
+    void printuniq(MouseEvent event) {
+        clearAll();
+    }
+
+    private void clearAll() {
+        txtsuply.setText("");
+        txtfname.setText("");
+        txtlname.setText("");
+        t.setText("");
+        txtcity.setText("");
+        txtaddress.setText("");
+    }
+
+
+    @FXML
+    void get(KeyEvent event) {
+        tbl.getItems().clear();
+
+        String searchtxt = suplytxt.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select customerid,firstname,lastname,address,city,contact from customer where city like" + searchtxt + "";
+        String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
             while (set.next()) {
-                resulttbl.getItems().add(new CustomerDTO(
-                        set.getString("customerid"),
+                tbl.getItems().add(new SuplierTM(
+                        set.getString("suplierid"),
                         set.getString("firstname"),
                         set.getString("lastname"),
+                        set.getString("city"),
                         set.getString("contact"),
                         set.getString("address"),
-                        set.getString("city")
+                        set.getString("company")
                 ));
             }
 
@@ -151,22 +154,23 @@ public class CustomerReportController implements Initializable {
     }
 
     @FXML
-    void loadset(KeyEvent event) {
-        resulttbl.getItems().clear();
+    void getscity(KeyEvent event) {
+        tbl.getItems().clear();
 
-        String searchtxt = txtsearchname.getText();
+        String searchtxt = city.getText();
         searchtxt = "'" + searchtxt + "%'";
-        String sql = "select customerid,firstname,lastname,address,city,contact from customer where customerid like" + searchtxt + " || city like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
+        String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where city like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
             while (set.next()) {
-                resulttbl.getItems().add(new CustomerDTO(
-                        set.getString("customerid"),
+                tbl.getItems().add(new SuplierTM(
+                        set.getString("suplierid"),
                         set.getString("firstname"),
                         set.getString("lastname"),
+                        set.getString("city"),
                         set.getString("contact"),
                         set.getString("address"),
-                        set.getString("city")
+                        set.getString("company")
                 ));
             }
 
@@ -177,9 +181,5 @@ public class CustomerReportController implements Initializable {
         }
     }
 
-    @FXML
-    void printbytable(MouseEvent event) {
-
-    }
 
 }

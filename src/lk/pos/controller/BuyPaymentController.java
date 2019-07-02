@@ -11,35 +11,33 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
-import lk.pos.modal.OrderDTO;
+import lk.pos.modal.SellPayment;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class OrderReportController implements Initializable {
+public class BuyPaymentController implements Initializable {
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
         setMonth();
 
         colorderid.setStyle("-fx-alignment:center");
-        colcusid.setStyle("-fx-alignment:center");
-        coldebd.setStyle("-fx-alignment:center");
+        colpayid.setStyle("-fx-alignment:center");
+        colpaytype.setStyle("-fx-alignment:center");
         coldate.setStyle("-fx-alignment:center");
         coltime.setStyle("-fx-alignment:center");
-        colttl.setStyle("-fx-alignment:center");
-        coldiscount.setStyle("-fx-alignment:center");
-        coldescribe.setStyle("-fx-alignment:center");
+        colamount.setStyle("-fx-alignment:center");
 
         colorderid.setCellValueFactory(new PropertyValueFactory<>("orderid"));
-        colcusid.setCellValueFactory(new PropertyValueFactory<>("customerid"));
-        coldebd.setCellValueFactory(new PropertyValueFactory<>("debd"));
+        colpayid.setCellValueFactory(new PropertyValueFactory<>("paymentid"));
+        colpaytype.setCellValueFactory(new PropertyValueFactory<>("paymenttype"));
         coldate.setCellValueFactory(new PropertyValueFactory<>("date"));
         coltime.setCellValueFactory(new PropertyValueFactory<>("time"));
-        colttl.setCellValueFactory(new PropertyValueFactory<>("ttl"));
-        coldiscount.setCellValueFactory(new PropertyValueFactory<>("discount"));
-        coldescribe.setCellValueFactory(new PropertyValueFactory<>("describe"));
+        colamount.setCellValueFactory(new PropertyValueFactory<>("payment"));
 
     }
 
@@ -61,7 +59,7 @@ public class OrderReportController implements Initializable {
     }
 
     @FXML
-    private TextField txtordeid;
+    private TextField txtorderid;
 
     @FXML
     private ComboBox<String> txtmonth;
@@ -70,16 +68,16 @@ public class OrderReportController implements Initializable {
     private JFXDatePicker txtdate;
 
     @FXML
-    private TableView<OrderDTO> tbl;
+    private TableView<SellPayment> tbl;
 
     @FXML
     private TableColumn<?, ?> colorderid;
 
     @FXML
-    private TableColumn<?, ?> colcusid;
+    private TableColumn<?, ?> colpayid;
 
     @FXML
-    private TableColumn<?, ?> coldebd;
+    private TableColumn<?, ?> colpaytype;
 
     @FXML
     private TableColumn<?, ?> coldate;
@@ -88,41 +86,74 @@ public class OrderReportController implements Initializable {
     private TableColumn<?, ?> coltime;
 
     @FXML
-    private TableColumn<?, ?> colttl;
+    private TableColumn<?, ?> colamount;
 
     @FXML
-    private TableColumn<?, ?> coldiscount;
+    void clearset(MouseEvent event) {
+        tbl.getItems().clear();
+    }
 
     @FXML
-    private TableColumn<?, ?> coldescribe;
+    void clerall(MouseEvent event) {
+        tbl.getItems().clear();
+    }
 
     @FXML
-    void print(MouseEvent event) {
+    void getbyid(KeyEvent event) {
+
+        tbl.getItems().clear();
+
+        String searchtxt = txtorderid.getText();
+        searchtxt = "'" + searchtxt + "%'";
+        String sql = "select * from buypayment where suplyid like" + searchtxt + "";
+        try {
+            ResultSet set = CrudUtill.executeQuery(sql);
+            while (set.next()) {
+
+                tbl.getItems().add(new SellPayment(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getInt(7),
+                        set.getString(3),
+                        set.getString(4),
+                        set.getDouble(5),
+                        set.getString(6)
+
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
 
     }
 
     @FXML
-    void searchbtn(MouseEvent event) {
+    void search(MouseEvent event) {
+
 
         if (txtmonth.getSelectionModel().getSelectedItem() != null) {
 
             tbl.getItems().clear();
 
             String searchtxt = txtmonth.getSelectionModel().getSelectedItem();
-            String sql = "select * from orders where MONTHNAME(date)=?";
+            String sql = "select * from buypayment where MONTHNAME(date)=?";
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, searchtxt);
 
                 while (set.next()) {
-                    tbl.getItems().add(new OrderDTO(
+                    tbl.getItems().add(new SellPayment(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            set.getInt(7),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
                             set.getString(6)
+
                     ));
                 }
 
@@ -136,23 +167,22 @@ public class OrderReportController implements Initializable {
 
         }
         if (txtdate.getValue() != null) {
-            System.out.println(txtdate.getValue());
 
             tbl.getItems().clear();
-            String sql = "select * from orders where date=?";
+            String sql = "select * from buypayment where date=?";
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, txtdate.getValue());
 
                 while (set.next()) {
-                    tbl.getItems().add(new OrderDTO(
+                    tbl.getItems().add(new SellPayment(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            set.getInt(7),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
                             set.getString(6)
+
                     ));
                 }
             } catch (SQLException e) {
@@ -163,49 +193,6 @@ public class OrderReportController implements Initializable {
 
         }
 
-    }
-
-    @FXML
-    void gt(KeyEvent event) {
-
-        tbl.getItems().clear();
-
-        String searchtxt = txtordeid.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select * from orders where orderid like " + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
-
-            while (set.next()) {
-                tbl.getItems().add(new OrderDTO(
-                        set.getInt(1),
-                        set.getString(2),
-                        255,
-                        set.getString(3),
-                        set.getString(4),
-                        set.getDouble(5),
-                        250,
-                        set.getString(6)
-                ));
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
 
     }
-
-    @FXML
-    void fuck(MouseEvent event) {
-        tbl.getItems().clear();
-    }
-
-    @FXML
-    void clear(MouseEvent event) {
-        tbl.getItems().clear();
-    }
-
 }

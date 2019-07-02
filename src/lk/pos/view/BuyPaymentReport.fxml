@@ -3,16 +3,16 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXDatePicker?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.Cursor?>
+<?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.*?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="513.0"
             prefWidth="857.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.pos.controller.BuyPaymentController">
     <children>
         <Text fill="#0097e6" layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0"
-              text="Buy Payment Reports">
+              text="Sell Payment Reports">
             <font>
                 <Font name="System Bold" size="16.0"/>
             </font>
@@ -39,23 +39,26 @@
                 <Image url="@../image/icons8_print_26px.png"/>
             </image>
         </ImageView>
-        <TextField layoutX="14.0" layoutY="52.0" prefHeight="29.0" prefWidth="125.0" promptText="Supply ID">
+        <TextField fx:id="txtorderid" layoutX="14.0" layoutY="52.0" onKeyReleased="#getbyid" prefHeight="29.0"
+                   prefWidth="125.0" promptText="Supply ID">
             <font>
                 <Font name="System Italic" size="13.0"/>
             </font>
         </TextField>
-        <ComboBox layoutX="148.0" layoutY="52.0" prefHeight="29.0" prefWidth="150.0" promptText="Month">
+        <ComboBox fx:id="txtmonth" layoutX="148.0" layoutY="52.0" onMouseClicked="#clearset" prefHeight="29.0"
+                  prefWidth="150.0" promptText="Month">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ComboBox>
-        <JFXDatePicker layoutX="316.0" layoutY="53.0" promptText="Pic A Date">
+        <JFXDatePicker fx:id="txtdate" layoutX="316.0" layoutY="53.0" onMouseClicked="#clerall" promptText="Pic A Date">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXDatePicker>
-        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="506.0" layoutY="52.0" prefHeight="30.0"
-                   prefWidth="97.0" style="-fx-background-color: #00a8ff;" text="Search" textFill="WHITE">
+        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="506.0" layoutY="52.0" onMouseClicked="#search"
+                   prefHeight="30.0" prefWidth="97.0" style="-fx-background-color: #00a8ff;" text="Search"
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
@@ -68,17 +71,22 @@
             <image>
                 <Image url="@../image/icons8_search_filled_50px.png"/>
             </image>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </ImageView>
-        <TableView layoutX="14.0" layoutY="96.0" prefHeight="200.0" prefWidth="592.0">
+        <TableView fx:id="tbl" layoutX="14.0" layoutY="96.0" prefHeight="200.0" prefWidth="592.0">
             <columns>
-                <TableColumn prefWidth="75.0" text="Supply ID"/>
-                <TableColumn prefWidth="82.0" text="Payment ID"/>
-                <TableColumn prefWidth="90.0" text="Payment Type"/>
-                <TableColumn prefWidth="73.0" text="Date "/>
-                <TableColumn prefWidth="73.0" text="Time"/>
-                <TableColumn prefWidth="73.0" text="Amount"/>
-                <TableColumn prefWidth="125.0" text="Description"/>
+                <TableColumn fx:id="colorderid" prefWidth="75.0" text="Supply ID"/>
+                <TableColumn fx:id="colpayid" prefWidth="82.0" text="Payment ID"/>
+                <TableColumn fx:id="colpaytype" prefWidth="114.0" text="Payment Type"/>
+                <TableColumn fx:id="coldate" prefWidth="74.0" text="Date "/>
+                <TableColumn fx:id="coltime" prefWidth="96.0" text="Time"/>
+                <TableColumn fx:id="colamount" prefWidth="149.0" text="Amount"/>
             </columns>
+            <cursor>
+                <Cursor fx:constant="HAND"/>
+            </cursor>
         </TableView>
     </children>
 </AnchorPane>

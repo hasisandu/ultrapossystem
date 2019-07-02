@@ -39,19 +39,20 @@
                 <Image url="@../image/icons8_print_26px.png"/>
             </image>
         </ImageView>
-        <TextField fx:id="txtordeid" layoutX="14.0" layoutY="49.0" prefHeight="31.0" prefWidth="173.0"
-                   promptText="Order ID">
+        <TextField fx:id="txtordeid" layoutX="14.0" layoutY="49.0" onKeyReleased="#gt" prefHeight="31.0"
+                   prefWidth="173.0" promptText="Order ID">
             <font>
                 <Font name="System Italic" size="14.0"/>
             </font>
         </TextField>
-        <ComboBox fx:id="txtmonth" layoutX="197.0" layoutY="48.0" prefHeight="31.0" prefWidth="150.0"
-                  promptText="Month">
+        <ComboBox fx:id="txtmonth" layoutX="197.0" layoutY="48.0" onMouseClicked="#fuck" prefHeight="31.0"
+                  prefWidth="150.0" promptText="Month">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </ComboBox>
-        <JFXDatePicker fx:id="txtdate" layoutX="361.0" layoutY="48.0" promptText="Select A Date">
+        <JFXDatePicker fx:id="txtdate" layoutX="361.0" layoutY="48.0" onMouseClicked="#clear"
+                       promptText="Select A Date">
             <cursor>
                 <Cursor fx:constant="HAND"/>
             </cursor>

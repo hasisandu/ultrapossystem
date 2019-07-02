@@ -24,6 +24,10 @@ public class ExternalImportController implements Initializable {
 
         loadTable();
 
+        coldate.setStyle("-fx-alignment:center");
+        coltime.setStyle("-fx-alignment:center");
+        colcost.setStyle("-fx-alignment:center");
+
         coldate.setCellValueFactory(new PropertyValueFactory<>("date"));
         coltime.setCellValueFactory(new PropertyValueFactory<>("time"));
         colcost.setCellValueFactory(new PropertyValueFactory<>("price"));
