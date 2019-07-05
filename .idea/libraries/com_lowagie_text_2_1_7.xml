@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="com.lowagie.text-2.1.7">
+    <CLASSES>
+      <root url="jar://F:/Jasper Studio/Jasper Libs/com.lowagie.text-2.1.7.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/commons-beanutils-1.8.3.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/commons-digester-2.1.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/itextpdf-5.3.4.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/jasperreports-6.4.3.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/jasperreports-javaflow-6.4.3.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/jcommon-1.0.8.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/jfreechart-1.0.13.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/org-apache-commons-logging.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Libs/org.apache.commons.collections.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/commons-beanutils-1.9.3.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/commons-collections4-4.1.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/commons-digester3-3.2.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/commons-javaflow-1590792.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/commons-logging-1.2.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/jasperreports-6.3.1.jar!/" />
+      <root url="jar://F:/Jasper Studio/Jasper Software/Jasper/libraries/jasperreports-javaflow-6.3.1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://F:/Jasper Studio/Jasper Libs/itext-2.1.7-src.jar!/" />
+    </SOURCES>
+  </library>
+</component>

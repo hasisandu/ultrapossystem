@@ -1,5 +1,6 @@
 package lk.pos.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -10,10 +11,15 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.modal.CustomerDTO;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class CustomerReportController implements Initializable {
@@ -32,7 +38,11 @@ public class CustomerReportController implements Initializable {
         colcontact.setCellValueFactory(new PropertyValueFactory<>("contact"));
         coladdress.setCellValueFactory(new PropertyValueFactory<>("address"));
 
+        bt.setDisable(true);
     }
+
+    @FXML
+    private JFXButton bt;
 
     @FXML
     private TextField txtsearchname;
@@ -79,6 +89,29 @@ public class CustomerReportController implements Initializable {
     @FXML
     void Prinddetailwice(MouseEvent event) {
 
+        bt.setDisable(true);
+
+        try {
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("customerid", txtcusid.getText());
+            parameters.put("firstname", txtfname.getText());
+            parameters.put("lastname", txtlname.getText());
+            parameters.put("contact", txtcontact.getText());
+            parameters.put("address", txtaddress.getText());
+            parameters.put("city", txtcity.getText());
+
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint);
+            jasperViewer.setVisible(true);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+
         clearAll();
 
     }
@@ -94,6 +127,8 @@ public class CustomerReportController implements Initializable {
 
     @FXML
     void getuniq(MouseEvent event) {
+
+        bt.setDisable(false);
 
         String id = resulttbl.getSelectionModel().getSelectedItem().getCustomerid();
         try {
@@ -154,6 +189,8 @@ public class CustomerReportController implements Initializable {
         }
     }
 
+    ArrayList<CustomerDTO> namelist = new ArrayList<>();
+
     @FXML
     void loadset(KeyEvent event) {
         resulttbl.getItems().clear();
@@ -166,7 +203,9 @@ public class CustomerReportController implements Initializable {
             String sql = "select customerid,firstname,lastname,address,city,contact from customer where customerid like" + searchtxt + " || city like" + searchtxt + " || firstname like" + searchtxt + " || lastname like" + searchtxt + "";
             try {
                 ResultSet set = CrudUtill.executeQuery(sql);
+                namelist.clear();
                 while (set.next()) {
+                    namelist.add(new CustomerDTO(set.getString("customerid"), set.getString("firstname"), set.getString("lastname"), set.getString("contact"), set.getString("address"), set.getString("city")));
                     resulttbl.getItems().add(new CustomerDTO(
                             set.getString("customerid"),
                             set.getString("firstname"),
@@ -187,6 +226,38 @@ public class CustomerReportController implements Initializable {
 
     @FXML
     void printbytable(MouseEvent event) {
+
+
+//        System.out.println(Arrays.asList(namelist));
+//
+//        JRBeanCollectionDataSource itemsJRbeans=new JRBeanCollectionDataSource(namelist);
+//
+//        Map parameters= new HashMap<>();
+//            parameters.put("CustomerDataSource",itemsJRbeans);
+//
+//        System.out.println(parameters.toString());
+//
+//        try {
+//            Connection connection= DBConnection.getInstanse().getConnection();
+//            String locate= GlobalLocationContent.getLocation();
+//            JasperReport jasperReport=JasperCompileManager.compileReport(""+locate+"Customer1.jrxml");
+////            JasperDesign jasperDesign=JRXmlLoader.load(new File("").getAbsolutePath());
+//            JREmptyDataSource jrEmptyDataSource= new JREmptyDataSource();
+//            JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,parameters,jrEmptyDataSource);
+//            JasperViewer jasperViewer=new JasperViewer(jasperPrint);
+//            jasperViewer.setVisible(true);
+//
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        } catch (JRException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+
+
 
     }
 

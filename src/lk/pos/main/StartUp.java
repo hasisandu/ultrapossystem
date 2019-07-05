@@ -15,7 +15,7 @@ public class StartUp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(this.getClass().getResource("/lk/pos/view/login.fxml"));
+        Parent root = FXMLLoader.load(this.getClass().getResource("/lk/pos/view/MainView.fxml"));
         Scene mainScene= new Scene(root);
         primaryStage.setTitle("Ultra Version 1.0");
         primaryStage.setScene(mainScene);
