@@ -74,4 +74,17 @@ public class SuplierTM {
     public void setCompany(String company) {
         this.company = company;
     }
+
+    @Override
+    public String toString() {
+        return "SuplierTM{" +
+                "suplierid='" + suplierid + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", latname='" + latname + '\'' +
+                ", city='" + city + '\'' +
+                ", contact='" + contact + '\'' +
+                ", address='" + address + '\'' +
+                ", company='" + company + '\'' +
+                '}';
+    }
 }

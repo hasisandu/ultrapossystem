@@ -24,8 +24,9 @@
                 <Image url="@../image/icons8_print_26px.png"/>
             </image>
         </ImageView>
-        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="14.0" layoutY="300.0" prefHeight="63.0"
-                   prefWidth="109.0" style="-fx-background-color: #192a56;" text="Print   " textFill="WHITE">
+        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="14.0" layoutY="300.0" onMouseClicked="#print"
+                   prefHeight="63.0" prefWidth="109.0" style="-fx-background-color: #192a56;" text="Print   "
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>

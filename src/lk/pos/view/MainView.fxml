@@ -175,7 +175,7 @@
       </AnchorPane>
       <AnchorPane layoutX="257.0" prefHeight="64.0" prefWidth="1038.0" style="-fx-background-color: #EDEDED;">
          <children>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="773.0" layoutY="10.0" pickOnBounds="true">
+             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="778.0" layoutY="16.0" pickOnBounds="true">
                <image>
                   <Image url="@../image/icons8_filled_circle_24px.png" />
                </image>
@@ -188,7 +188,8 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="38.0" layoutX="18.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+             <ImageView fitHeight="30.0" fitWidth="38.0" layoutX="18.0" layoutY="20.0" pickOnBounds="true"
+                        preserveRatio="true">
                <image>
                   <Image url="@../image/icons8_menu_filled_50px.png" />
                </image>
@@ -196,7 +197,7 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </ImageView>
-             <Text fx:id="fuckinqty" fill="WHITE" layoutX="780.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0"
+             <Text fx:id="fuckinqty" fill="WHITE" layoutX="785.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="12" textAlignment="CENTER" wrappingWidth="17.000001430511475">
                <font>
                   <Font name="System Bold" size="13.0" />
@@ -208,7 +209,7 @@
                      <Cursor fx:constant="HAND"/>
                  </cursor>
             </Text>
-            <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="858.0" layoutY="9.0" pickOnBounds="true">
+             <ImageView fitHeight="46.0" fitWidth="43.0" layoutX="858.0" layoutY="16.0" pickOnBounds="true">
                <image>
                   <Image url="@../image/icons8_user_50px.png" />
                </image>
@@ -216,31 +217,32 @@
                     <Cursor fx:constant="HAND"/>
                 </cursor>
             </ImageView>
-             <Text layoutX="909.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultra Stationers"/>
-             <Separator layoutX="827.0" layoutY="8.0" orientation="VERTICAL" prefHeight="46.0" prefWidth="0.0"
+             <Text layoutX="909.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ultra Stationers"/>
+             <Separator layoutX="827.0" layoutY="18.0" orientation="VERTICAL" prefHeight="46.0" prefWidth="0.0"
                         style="-fx-background-color: gray;"/>
-             <Text fx:id="txtdate" fill="#2980b9" layoutX="174.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0"
+             <Text fx:id="txtdate" fill="#2980b9" layoutX="174.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="2019-01-20">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="txttime" fill="#2980b9" layoutX="322.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0"
+             <Text fx:id="txttime" fill="#2980b9" layoutX="322.0" layoutY="53.0" strokeType="OUTSIDE" strokeWidth="0.0"
                    text="08:20:22">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#2c3e50" layoutX="174.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
+             <Text fill="#2c3e50" layoutX="174.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Date">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-            <Text fill="#2c3e50" layoutX="322.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
+             <Text fill="#2c3e50" layoutX="322.0" layoutY="33.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Time">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
+             <AnchorPane layoutX="-3.0" prefHeight="16.0" prefWidth="1038.0" style="-fx-background-color: #2A3F54;"/>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="257.0" layoutY="64.0" prefHeight="96.0" prefWidth="1038.0" style="-fx-border-color: #9ABCC3;">

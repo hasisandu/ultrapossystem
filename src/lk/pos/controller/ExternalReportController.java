@@ -10,13 +10,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.TM.External;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ExternalReportController implements Initializable {
+
+    List<External> list = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -85,6 +90,23 @@ public class ExternalReportController implements Initializable {
     @FXML
     void print(MouseEvent event) {
 
+        try {
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+            Map<String, Object> parameters = new HashMap<>();
+            System.out.println(list.size());
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "externalTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -99,7 +121,19 @@ public class ExternalReportController implements Initializable {
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, searchtxt);
 
+                list.clear();
+
                 while (set.next()) {
+
+                    list.add(new External(
+                            set.getInt(1),
+                            set.getString(2),
+                            set.getString(3),
+                            set.getString(4),
+                            set.getDouble(5)
+
+                    ));
+
                     tbl.getItems().add(new External(
                             set.getInt(1),
                             set.getString(2),
@@ -126,7 +160,21 @@ public class ExternalReportController implements Initializable {
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, date.getValue());
 
+
+                list.clear();
+
                 while (set.next()) {
+
+                    list.add(new External(
+                            set.getInt(1),
+                            set.getString(2),
+                            set.getString(3),
+                            set.getString(4),
+                            set.getDouble(5)
+
+                    ));
+
+
                     tbl.getItems().add(new External(
                             set.getInt(1),
                             set.getString(2),
@@ -135,6 +183,8 @@ public class ExternalReportController implements Initializable {
                             set.getDouble(5)
 
                     ));
+
+
                 }
             } catch (SQLException e) {
                 e.printStackTrace();

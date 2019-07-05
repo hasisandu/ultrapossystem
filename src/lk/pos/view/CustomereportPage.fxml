@@ -53,7 +53,7 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" disable="true" layoutX="14.0" layoutY="360.0"
+        <JFXButton alignment="CENTER_RIGHT" buttonType="RAISED" layoutX="14.0" layoutY="360.0"
                    onMouseClicked="#printbytable" prefHeight="63.0" prefWidth="109.0"
                    style="-fx-background-color: #192a56;" text="Print   " textFill="WHITE">
             <font>

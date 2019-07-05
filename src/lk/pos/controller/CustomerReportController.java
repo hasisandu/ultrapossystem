@@ -12,15 +12,13 @@ import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.modal.CustomerDTO;
 import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CustomerReportController implements Initializable {
     @Override
@@ -93,19 +91,19 @@ public class CustomerReportController implements Initializable {
 
         try {
             String locate = GlobalLocationContent.getLocation();
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByTable.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByIni.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
-            Map<String, Object> parameters = new HashMap<>();
+            Map<String, Object> parameters = new LinkedHashMap<>();
+
             parameters.put("customerid", txtcusid.getText());
             parameters.put("firstname", txtfname.getText());
             parameters.put("lastname", txtlname.getText());
             parameters.put("contact", txtcontact.getText());
             parameters.put("address", txtaddress.getText());
-            parameters.put("city", txtcity.getText());
-
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
-            JasperViewer jasperViewer = new JasperViewer(jasperPrint);
-            jasperViewer.setVisible(true);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
 
         } catch (JRException e) {
             e.printStackTrace();
@@ -226,39 +224,25 @@ public class CustomerReportController implements Initializable {
 
     @FXML
     void printbytable(MouseEvent event) {
+        JRBeanCollectionDataSource itemsBean = new JRBeanCollectionDataSource(namelist);
+        Map<String, Object> parameeters = new HashMap<>();
+        parameeters.put("ItemDataSource", itemsBean);
 
+        String locate = GlobalLocationContent.getLocation();
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameeters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
 
-//        System.out.println(Arrays.asList(namelist));
-//
-//        JRBeanCollectionDataSource itemsJRbeans=new JRBeanCollectionDataSource(namelist);
-//
-//        Map parameters= new HashMap<>();
-//            parameters.put("CustomerDataSource",itemsJRbeans);
-//
-//        System.out.println(parameters.toString());
-//
-//        try {
-//            Connection connection= DBConnection.getInstanse().getConnection();
-//            String locate= GlobalLocationContent.getLocation();
-//            JasperReport jasperReport=JasperCompileManager.compileReport(""+locate+"Customer1.jrxml");
-////            JasperDesign jasperDesign=JRXmlLoader.load(new File("").getAbsolutePath());
-//            JREmptyDataSource jrEmptyDataSource= new JREmptyDataSource();
-//            JasperPrint jasperPrint=JasperFillManager.fillReport(jasperReport,parameters,jrEmptyDataSource);
-//            JasperViewer jasperViewer=new JasperViewer(jasperPrint);
-//            jasperViewer.setVisible(true);
-//
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        } catch (ClassNotFoundException e) {
-//            e.printStackTrace();
-//        } catch (JRException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
-
-
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
 
     }
 
+
 }
+
+

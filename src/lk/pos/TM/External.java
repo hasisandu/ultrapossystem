@@ -54,4 +54,15 @@ public class External {
     public void setPrice(double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "External{" +
+                "id=" + id +
+                ", reason='" + reason + '\'' +
+                ", date='" + date + '\'' +
+                ", time='" + time + '\'' +
+                ", price=" + price +
+                '}';
+    }
 }

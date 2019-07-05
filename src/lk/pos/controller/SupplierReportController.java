@@ -10,10 +10,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.TM.SuplierTM;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class SupplierReportController implements Initializable {
@@ -105,13 +111,63 @@ public class SupplierReportController implements Initializable {
 
     }
 
+    ArrayList<SuplierTM> list = new ArrayList<>();
+
     @FXML
     void pribt(MouseEvent event) {
+
+        try {
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+            Map<String, Object> parameters = new HashMap<>();
+            System.out.println(list.size());
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "SuplierByTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+
         clearAll();
     }
 
     @FXML
     void printuniq(MouseEvent event) {
+
+        list.clear();
+
+        String id = txtsuply.getText();
+        String fname = txtfname.getText();
+        String lname = txtlname.getText();
+        String contact = t.getText();
+        String address = txtaddress.getText();
+        String city = txtcity.getText();
+
+        list.add(new SuplierTM(id, fname, lname, city, contact, address, ""));
+
+        try {
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+            Map<String, Object> parameters = new HashMap<>();
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "SuplierByTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+
         clearAll();
     }
 
@@ -137,7 +193,19 @@ public class SupplierReportController implements Initializable {
             String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where suplierid like" + searchtxt + "";
             try {
                 ResultSet set = CrudUtill.executeQuery(sql);
+                list.clear();
                 while (set.next()) {
+
+                    list.add(new SuplierTM(
+                            set.getString("suplierid"),
+                            set.getString("firstname"),
+                            set.getString("lastname"),
+                            set.getString("city"),
+                            set.getString("contact"),
+                            set.getString("address"),
+                            set.getString("company")
+                    ));
+
                     tbl.getItems().add(new SuplierTM(
                             set.getString("suplierid"),
                             set.getString("firstname"),
@@ -166,7 +234,22 @@ public class SupplierReportController implements Initializable {
         String sql = "select suplierid,firstname,lastname,address,city,contact,company from suplier where city like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
+
+            list.clear();
+
             while (set.next()) {
+
+
+                list.add(new SuplierTM(
+                        set.getString("suplierid"),
+                        set.getString("firstname"),
+                        set.getString("lastname"),
+                        set.getString("city"),
+                        set.getString("contact"),
+                        set.getString("address"),
+                        set.getString("company")
+                ));
+
                 tbl.getItems().add(new SuplierTM(
                         set.getString("suplierid"),
                         set.getString("firstname"),

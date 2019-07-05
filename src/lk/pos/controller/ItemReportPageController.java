@@ -1,5 +1,6 @@
 package lk.pos.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
@@ -10,11 +11,14 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.modal.ItemDTO;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class ItemReportPageController implements Initializable {
     @Override
@@ -37,6 +41,8 @@ public class ItemReportPageController implements Initializable {
         colbrand.setCellValueFactory(new PropertyValueFactory<>("brand"));
         colprice.setCellValueFactory(new PropertyValueFactory<>("price"));
         coldescribe.setCellValueFactory(new PropertyValueFactory<>("discribe"));
+
+        bt.setDisable(true);
 
     }
 
@@ -122,6 +128,7 @@ public class ItemReportPageController implements Initializable {
                 txtprice.setText(set.getString("price"));
                 txtbadge.setText(set.getString("badgeid"));
                 txtdiscribe.setText(set.getString("describedetail"));
+                bt.setDisable(false);
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Customer Has Deleted...", ButtonType.CLOSE).show();
             }
@@ -139,6 +146,8 @@ public class ItemReportPageController implements Initializable {
 
     }
 
+    List<ItemDTO> list = new ArrayList();
+
     @FXML
     void loadsearch(KeyEvent event) {
 
@@ -149,7 +158,20 @@ public class ItemReportPageController implements Initializable {
         String sql = "select a.itemid,a.brand,a.name,a.qtyonstock,b.qty,b.id,a.price,a.badgeid,a.describedetail from stock a join shop b on b.id=a.itemid && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.describedetail like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
+            list.clear();
             while (set.next()) {
+
+
+                list.add(new ItemDTO(
+                        set.getString("itemid"),
+                        set.getString("name"),
+                        set.getInt("badgeid"),
+                        set.getInt("qty"),
+                        set.getInt("qtyonstock"),
+                        set.getString("brand"),
+                        set.getDouble("price"),
+                        set.getString("describedetail")
+                ));
 
                 tbl.getItems().add(new ItemDTO(
                         set.getString("itemid"),
@@ -174,10 +196,65 @@ public class ItemReportPageController implements Initializable {
     @FXML
     void printAll(MouseEvent event) {
 
+        JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ItemReport", jrBeanCollectionDataSource);
+
+        String locate = GlobalLocationContent.getLocation();
+
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "StockReportbyTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
     @FXML
+    private JFXButton bt;
+
+    @FXML
     void printuniq(MouseEvent event) {
+
+        list.clear();
+
+
+        try {
+
+            list.add(new ItemDTO(
+                    txtitemid.getText(),
+                    txtname.getText(),
+                    Integer.parseInt(txtbadge.getText()),
+                    Integer.parseInt(txtqtyonshop.getText()),
+                    Integer.parseInt(txtqtyonstock.getText()),
+                    txtbrand.getText(),
+                    Double.parseDouble(txtprice.getText()),
+                    txtdiscribe.getText()
+            ));
+
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+            Map<String, Object> parameters = new HashMap<>();
+
+
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "ItemByuniq.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            parameters.put("ItemReport", jrBeanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+        bt.setDisable(true);
 
     }
 

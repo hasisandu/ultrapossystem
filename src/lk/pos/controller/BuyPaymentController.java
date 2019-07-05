@@ -12,10 +12,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
 import lk.pos.modal.SellPayment;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class BuyPaymentController implements Initializable {
@@ -108,7 +114,22 @@ public class BuyPaymentController implements Initializable {
         String sql = "select * from buypayment where suplyid like" + searchtxt + "";
         try {
             ResultSet set = CrudUtill.executeQuery(sql);
+
+            list.clear();
+
             while (set.next()) {
+
+                list.add(new SellPayment(
+                        set.getInt(1),
+                        set.getString(2),
+                        set.getInt(7),
+                        set.getString(3),
+                        set.getString(4),
+                        set.getDouble(5),
+                        set.getString(6)
+
+                ));
+
 
                 tbl.getItems().add(new SellPayment(
                         set.getInt(1),
@@ -144,7 +165,23 @@ public class BuyPaymentController implements Initializable {
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, searchtxt);
 
+                list.clear();
+
                 while (set.next()) {
+
+
+                    list.add(new SellPayment(
+                            set.getInt(1),
+                            set.getString(2),
+                            set.getInt(7),
+                            set.getString(3),
+                            set.getString(4),
+                            set.getDouble(5),
+                            set.getString(6)
+
+                    ));
+
+
                     tbl.getItems().add(new SellPayment(
                             set.getInt(1),
                             set.getString(2),
@@ -173,7 +210,21 @@ public class BuyPaymentController implements Initializable {
             try {
                 ResultSet set = CrudUtill.executeQuery(sql, txtdate.getValue());
 
+                list.clear();
+
                 while (set.next()) {
+
+                    list.add(new SellPayment(
+                            set.getInt(1),
+                            set.getString(2),
+                            set.getInt(7),
+                            set.getString(3),
+                            set.getString(4),
+                            set.getDouble(5),
+                            set.getString(6)
+
+                    ));
+
                     tbl.getItems().add(new SellPayment(
                             set.getInt(1),
                             set.getString(2),
@@ -195,4 +246,30 @@ public class BuyPaymentController implements Initializable {
 
 
     }
+
+
+    ArrayList<SellPayment> list = new ArrayList<>();
+
+    @FXML
+    void print(MouseEvent event) {
+        try {
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+            Map<String, Object> parameters = new HashMap<>();
+            System.out.println(list.size());
+            String locate = GlobalLocationContent.getLocation();
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "BuyPaymentTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+
 }

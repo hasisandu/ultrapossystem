@@ -32,7 +32,7 @@
                 <Image url="@../image/icons8_print_26px.png"/>
             </image>
         </ImageView>
-        <JFXButton alignment="CENTER_RIGHT" layoutX="510.0" layoutY="436.0" onMouseClicked="#printuniq"
+        <JFXButton fx:id="bt" alignment="CENTER_RIGHT" layoutX="510.0" layoutY="436.0" onMouseClicked="#printuniq"
                    prefHeight="63.0" prefWidth="109.0" style="-fx-background-color: #192a56;" text="Print   "
                    textFill="WHITE">
             <font>
