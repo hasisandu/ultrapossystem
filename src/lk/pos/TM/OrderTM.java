@@ -15,8 +15,8 @@ public class OrderTM {
         this.amount = amount;
     }
 
-    public OrderTM() {
-
+    public OrderTM(String itemid) {
+        this.itemid = itemid;
     }
 
     public String getItemid() {

@@ -5,23 +5,81 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
+import lk.pos.TM.OrderTM;
 import lk.pos.TM.PaymentTM;
+import lk.pos.db.DBConnection;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SellingPriceController implements Initializable {
+
+
+    @FXML
+    private ImageView x;
+    int i;
+    private PlaceOrderController placeOrderController = null;
+
+    Map<String, OrderTM> or;
+    List<OrderTM> fuckorder = new ArrayList<>();
+
+    public void setControll(PlaceOrderController controll) {
+
+
+        search.setDisable(true);
+        x.setDisable(true);
+        searchtxtfff.setDisable(true);
+        ordertable.setDisable(true);
+
+
+        placeOrderController = controll;
+
+
+        for (Map.Entry<String, OrderTM> entry : controll.map.entrySet()
+                ) {
+            System.out.println(entry.getValue().toString());
+            fuckorder.add(entry.getValue());
+        }
+
+        txtrest.setText(placeOrderController.totalcost + "");
+
+    }
+
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+        try {
+            ResultSet resultSet = CrudUtill.executeQuery("select orderid from orders order by orderid desc limit 1");
+            if (resultSet.next()) {
+                i = resultSet.getInt(1);
+                txtorderid.setText(++i + "");
+            } else {
+                txtorderid.setText(1 + "");
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+
 
         colpaymentid.setStyle("-fx-alignment:center");
         coldate.setStyle("-fx-alignment:center");
@@ -83,6 +141,8 @@ public class SellingPriceController implements Initializable {
     @FXML
     private RadioButton b;
 
+    private Connection connection;
+
 
     @FXML
     void Save(MouseEvent event) {
@@ -123,18 +183,91 @@ public class SellingPriceController implements Initializable {
             }
 
 
-            String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
-            try {
-                boolean saved = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
-                if (saved) {
-                    new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+            if (placeOrderController != null) {
+
+                try {
+
+                    connection = DBConnection.getInstanse().getConnection();
+                    connection.setAutoCommit(false);
+
+
+                    PreparedStatement preparedStatement = connection.prepareStatement("insert into orders values(?,?,?,?,?,?,?)");
+                    preparedStatement.setObject(1, Integer.parseInt(txtorderid.getText()));
+                    preparedStatement.setObject(2, placeOrderController.cusid);
+                    preparedStatement.setObject(3, x1);
+                    preparedStatement.setObject(4, x2);
+                    preparedStatement.setObject(5, Double.parseDouble(txtrest.getText()));
+                    preparedStatement.setObject(6, "");
+                    preparedStatement.setObject(7, 0.00);
+
+                    boolean saved = preparedStatement.executeUpdate() > 0;
+
+                    if (saved) {
+                        PreparedStatement preparedStatement2 = connection.prepareStatement("insert into orderdetail values(?,?,?,?)");
+
+                        for (OrderTM g : fuckorder
+                                ) {
+                            preparedStatement2.setObject(1, g.getItemid());
+                            preparedStatement2.setObject(2, txtorderid.getText());
+                            preparedStatement2.setObject(3, g.getQty());
+                            preparedStatement2.setObject(4, g.getAmount());
+                            preparedStatement2.executeUpdate();
+                        }
+
+                        String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
+                        try {
+                            boolean saved2 = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
+                            if (saved2) {
+                                new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+                            }
+                        } catch (SQLException e) {
+                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                            e.printStackTrace();
+                        } catch (ClassNotFoundException e) {
+                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                            e.printStackTrace();
+                        }
+
+
+                    }
+
+
+                    connection.commit();
+                    new Alert(Alert.AlertType.INFORMATION, "The Order Is Success", ButtonType.OK).show();
+
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    try {
+                        connection.rollback();
+                    } catch (SQLException e1) {
+                        e1.printStackTrace();
+                    }
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } finally {
+                    try {
+                        connection.setAutoCommit(true);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                 }
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-                e.printStackTrace();
-            } catch (ClassNotFoundException e) {
-                new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-                e.printStackTrace();
+
+
+            } else {
+
+                String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
+                try {
+                    boolean saved = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
+                    if (saved) {
+                        new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+                    }
+                } catch (SQLException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+                    e.printStackTrace();
+                }
             }
 
             txtorderid.setText("");

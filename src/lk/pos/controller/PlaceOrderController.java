@@ -27,6 +27,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -68,9 +70,12 @@ public class PlaceOrderController implements Initializable {
         colorderqty.setCellValueFactory(new PropertyValueFactory<>("qty"));
         colorderamount.setCellValueFactory(new PropertyValueFactory<>("amount"));
 
+        l.setDisable(true);
+        k.setDisable(true);
+
     }
 
-    private double totalcost = 0.00;
+    public double totalcost = 0.00;
 
     @FXML
     private TextField searchcustomertxt;
@@ -159,9 +164,15 @@ public class PlaceOrderController implements Initializable {
     private TextField amount;
 
     @FXML
-    private Text total;
+    public Text total;
+    public String cusid = "C001";
 
     private ArrayList<OrderTM> orderlist = new ArrayList<>();
+    private ObservableList li = FXCollections.observableArrayList();
+
+
+    Map<String, OrderTM> map = new HashMap<>();
+
 
     @FXML
     void addtocart(MouseEvent event) {
@@ -175,56 +186,41 @@ public class PlaceOrderController implements Initializable {
         boolean bqty = mqty.matches();
 
         if (bqty) {
+
+            l.setDisable(false);
+            k.setDisable(false);
+
+
+//            ================================================================================================
             tblorder.getItems().clear();
+            OrderTM orderTMs = new OrderTM(txtitemid.getText(), txtname.getText(), txtdescribe.getText(), Integer.parseInt(qty.getText()), Double.parseDouble(amount.getText()));
 
-            OrderTM tm = new OrderTM(
-                    txtitemid.getText(),
-                    txtname.getText(),
-                    txtdescribe.getText(),
-                    Integer.parseInt(qty.getText()),
-                    Double.parseDouble(amount.getText()));
+            map.put(txtitemid.getText(), orderTMs);
+            OrderTM orderfuck = null;
+            orderfuck = map.get(txtitemid.getText());
 
-            if (orderlist.size() > 0) {
-                for (OrderTM om : orderlist) {
-                    if (om.getItemid().equalsIgnoreCase(tm.getItemid())) {
-                        OrderTM temp = new OrderTM();
-                        int tempqty = om.getQty();
-                        tempqty += Integer.parseInt(qty.getText());
-                        double tempamount = om.getAmount();
-                        tempamount += Double.parseDouble(amount.getText());
-
-                        temp = new OrderTM(om.getItemid(), om.getName(), om.getDescribe(), tempqty, tempamount);
-                        orderlist.remove(om);
-                        orderlist.add(tm);
-                    } else {
-                        orderlist.add(tm);
-
-                    }
-                    totalcost += om.getAmount();
-
-                    System.out.println(om);
-                }
-
-                orderlist.add(tm);
-
-            } else {
-                orderlist.add(tm);
+            totalcost = 0.00;
+            for (Map.Entry<String, OrderTM> entry : map.entrySet()
+                    ) {
+                tblorder.getItems().add(entry.getValue());
+                totalcost += entry.getValue().getAmount();
             }
 
-            System.out.println(orderlist.size());
 
-            for (OrderTM t : orderlist) {
-                tblorder.getItems().add(t);
-            }
+//            ================================================================================================
+
 
             total.setText(totalcost + " LKR");
             qty.setText("");
             amount.setText("");
-
+            txtitemid.setText("");
+            txtdescribe.setText("");
+            txtname.setText("");
+            txtqty.setText("");
+            unitprice.setText("");
         } else {
             new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
         }
-
 
 
     }
@@ -249,17 +245,31 @@ public class PlaceOrderController implements Initializable {
 
     @FXML
     void submitOrder(MouseEvent event) {
-        try {
-            Parent root = FXMLLoader.load(getClass().getResource("../view/SellPaymentPage.fxml"));
-            Stage stage = new Stage();
-            Scene s = new Scene(root);
-            stage.setScene(s);
-            stage.show();
 
+
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("../view/SellPaymentPage.fxml"));
+
+            Parent p = loader.load();
+            Scene scene = new Scene(p);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+
+            SellingPriceController sellingPriceController = loader.getController();
+            sellingPriceController.setControll(this);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
+    @FXML
+    private JFXButton l;
+
+    @FXML
+    private JFXButton k;
 
     @FXML
     void getCustomer(KeyEvent event) {
@@ -304,31 +314,37 @@ public class PlaceOrderController implements Initializable {
     @FXML
     void getItem(KeyEvent event) {
 
-        tblitem.getItems().clear();
+        if (cusid.equalsIgnoreCase("C001")) {
+            new Alert(Alert.AlertType.WARNING, "Imposable! Select A Customer...", ButtonType.CLOSE).show();
 
-        String searchtxt = txtorderitemid.getText();
-        searchtxt = "'" + searchtxt + "%'";
-        String sql = "select a.itemid, b.id ,a.brand,a.name,b.qty,a.price,a.badgeid,a.describedetail from stock a join shop b on a.itemid=b.id && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.describedetail like" + searchtxt + "";
-        try {
-            ResultSet set = CrudUtill.executeQuery(sql);
+        } else {
+            tblitem.getItems().clear();
 
-            while (set.next()) {
-                te = set.getInt("qty");
-                tblitem.getItems().add(new ItemSearchTM(
-                        set.getString("itemid"),
-                        set.getString("name"),
-                        set.getString("describedetail"),
-                        set.getInt("qty"),
-                        set.getDouble("price")
-                ));
+            String searchtxt = txtorderitemid.getText();
+            searchtxt = "'" + searchtxt + "%'";
+            String sql = "select a.itemid, b.id ,a.brand,a.name,b.qty,a.price,a.badgeid,a.describedetail from stock a join shop b on a.itemid=b.id && a.itemid like" + searchtxt + " || a.brand like" + searchtxt + " || a.name like" + searchtxt + " || a.describedetail like" + searchtxt + "";
+            try {
+                ResultSet set = CrudUtill.executeQuery(sql);
+
+                while (set.next()) {
+                    te = set.getInt("qty");
+                    tblitem.getItems().add(new ItemSearchTM(
+                            set.getString("itemid"),
+                            set.getString("name"),
+                            set.getString("describedetail"),
+                            set.getInt("qty"),
+                            set.getDouble("price")
+                    ));
+                }
+
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
             }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
         }
+
 
     }
 
@@ -342,6 +358,7 @@ public class PlaceOrderController implements Initializable {
             if (set.next()) {
                 txtcusid.setText(set.getString(1));
                 txtcusname.setText(set.getString(2) + " " + (set.getString(3)));
+                cusid = txtcusid.getText();
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Customer Has Deleted...", ButtonType.CLOSE).show();
             }
@@ -377,5 +394,39 @@ public class PlaceOrderController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    String itemid = "no";
+
+    @FXML
+    void remove(MouseEvent event) {
+
+        if (!itemid.equalsIgnoreCase("no")) {
+            String xx = tblorder.getSelectionModel().getSelectedItem().getItemid();
+            tblorder.getItems().clear();
+            map.remove(xx);
+            totalcost = 0.00;
+            for (Map.Entry<String, OrderTM> entry : map.entrySet()
+                    ) {
+                tblorder.getItems().add(entry.getValue());
+                totalcost += entry.getValue().getAmount();
+            }
+
+            new Alert(Alert.AlertType.WARNING, " Product Has Removed...", ButtonType.CLOSE).show();
+            itemid = "no";
+
+        } else {
+            new Alert(Alert.AlertType.WARNING, " Select a Product From Table...", ButtonType.CLOSE).show();
+
+        }
+
+    }
+
+
+    @FXML
+    void getItemId(MouseEvent event) {
+        itemid = tblorder.getSelectionModel().getSelectedItem().getItemid();
+
+    }
+
 
 }

@@ -34,8 +34,9 @@
                 </TextField>
             </children>
         </AnchorPane>
-        <JFXButton buttonType="RAISED" layoutX="25.0" layoutY="474.0" onMouseClicked="#submitOrder" prefHeight="31.0"
-                   prefWidth="476.0" style="-fx-background-color: #00b894;" text="Submit Order" textFill="WHITE">
+        <JFXButton fx:id="l" buttonType="RAISED" layoutX="25.0" layoutY="474.0" onMouseClicked="#submitOrder"
+                   prefHeight="31.0" prefWidth="336.0" style="-fx-background-color: #00b894;" text="Submit Order"
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
@@ -82,7 +83,8 @@
             </font>
         </JFXTextField>
         <Separator layoutX="23.0" layoutY="280.0" prefHeight="3.0" prefWidth="496.0"/>
-        <TableView fx:id="tblorder" layoutX="28.0" layoutY="295.0" prefHeight="167.0" prefWidth="476.0">
+        <TableView fx:id="tblorder" layoutX="28.0" layoutY="295.0" onMouseClicked="#getItemId" prefHeight="167.0"
+                   prefWidth="476.0">
             <columns>
                 <TableColumn fx:id="colorderitemid" prefWidth="64.0" text="Item ID"/>
                 <TableColumn fx:id="colordername" prefWidth="100.0" text="Name"/>
@@ -162,10 +164,17 @@
                 <Font name="System Bold" size="17.0"/>
             </font>
         </Text>
-        <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="182.0" layoutY="475.0" pickOnBounds="true">
+        <ImageView fitHeight="29.0" fitWidth="29.0" layoutX="109.0" layoutY="477.0" pickOnBounds="true">
             <image>
                 <Image url="@../image/icons8_money_26px.png"/>
             </image>
         </ImageView>
+        <JFXButton fx:id="k" buttonType="RAISED" layoutX="369.0" layoutY="474.0" onMouseClicked="#remove"
+                   prefHeight="31.0" prefWidth="135.0" style="-fx-background-color: #d35400;" text="Remove"
+                   textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="15.0"/>
+            </font>
+        </JFXButton>
     </children>
 </AnchorPane>

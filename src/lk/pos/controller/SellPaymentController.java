@@ -22,6 +22,8 @@ import java.sql.SQLException;
 import java.util.*;
 
 public class SellPaymentController implements Initializable {
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

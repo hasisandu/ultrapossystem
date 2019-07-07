@@ -100,6 +100,7 @@ public class CustomerReportController implements Initializable {
             parameters.put("lastname", txtlname.getText());
             parameters.put("contact", txtcontact.getText());
             parameters.put("address", txtaddress.getText());
+            parameters.put("city", txtaddress.getText());
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.viewReport(jasperPrint, false);
