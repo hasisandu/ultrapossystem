@@ -258,7 +258,7 @@ public class BuyPaymentController implements Initializable {
             Map<String, Object> parameters = new HashMap<>();
             System.out.println(list.size());
             String locate = GlobalLocationContent.getLocation();
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "BuyPaymentTable.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "orderbypayment.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
             parameters.put("ItemDataSource", jrBeanCollectionDataSource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);

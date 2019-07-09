@@ -12,6 +12,9 @@ import lk.pos.DBUtility.CrudUtill;
 import lk.pos.TM.OrderTM;
 import lk.pos.TM.PaymentTM;
 import lk.pos.db.DBConnection;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -190,6 +193,7 @@ public class SellingPriceController implements Initializable {
                     connection = DBConnection.getInstanse().getConnection();
                     connection.setAutoCommit(false);
 
+                    ArrayList<OrderTM> list = new ArrayList();
 
                     PreparedStatement preparedStatement = connection.prepareStatement("insert into orders values(?,?,?,?,?,?,?)");
                     preparedStatement.setObject(1, Integer.parseInt(txtorderid.getText()));
@@ -200,9 +204,9 @@ public class SellingPriceController implements Initializable {
                     preparedStatement.setObject(6, "");
                     preparedStatement.setObject(7, 0.00);
 
-                    boolean saved = preparedStatement.executeUpdate() > 0;
+//                    boolean saved = preparedStatement.executeUpdate() > 0;
 
-                    if (saved) {
+                    if (true) {
                         PreparedStatement preparedStatement2 = connection.prepareStatement("insert into orderdetail values(?,?,?,?)");
 
                         for (OrderTM g : fuckorder
@@ -211,29 +215,52 @@ public class SellingPriceController implements Initializable {
                             preparedStatement2.setObject(2, txtorderid.getText());
                             preparedStatement2.setObject(3, g.getQty());
                             preparedStatement2.setObject(4, g.getAmount());
-                            preparedStatement2.executeUpdate();
+                            list.add(new OrderTM(g.getItemid(), g.getName(), g.getDescribe(), g.getQty(), g.getAmount()));
+//                            preparedStatement2.executeUpdate();
                         }
 
-                        String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
-                        try {
-                            boolean saved2 = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
-                            if (saved2) {
-                                new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
-                            }
-                        } catch (SQLException e) {
-                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
-                            e.printStackTrace();
-                        }
+//                        String sql = "INSERT INTO sellpayment(paymenttype,orderid,date,time,payment,description) VALUE(?,?,?,?,?,?)";
+//                        try {
+//                            boolean saved2 = CrudUtill.executeUpdate(sql, type, Integer.parseInt(txtorderid.getText()), x1, x2, Double.parseDouble(txtamount.getText()), "");
+//                            if (saved2) {
+//                                new Alert(Alert.AlertType.INFORMATION, "Payment Has been Saved !", ButtonType.CLOSE).show();
+//                            }
+//                        } catch (SQLException e) {
+//                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//                            e.printStackTrace();
+//                        } catch (ClassNotFoundException e) {
+//                            new Alert(Alert.AlertType.WARNING, "Something Went Wrong Please Contact US (0787418689)", ButtonType.OK).show();
+//                            e.printStackTrace();
+//                        }
 
 
                     }
 
 
                     connection.commit();
-                    new Alert(Alert.AlertType.INFORMATION, "The Order Is Success", ButtonType.OK).show();
+                    try {
+
+                        double fuckttl;
+                        fuckttl = (Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText()));
+
+                        JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+                        Map<String, Object> parameters = new HashMap<>();
+                        String locate = GlobalLocationContent.getLocation();
+                        JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "BuyPaymentTable.jrxml");
+                        JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+                        parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+                        parameters.put("orderid", Integer.parseInt(txtorderid.getText()));
+                        parameters.put("customerid", placeOrderController.cusid);
+                        parameters.put("total", Double.parseDouble(txtrest.getText()));
+                        parameters.put("payment", Double.parseDouble(txtamount.getText()));
+                        parameters.put("rest", fuckttl);
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+                        JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                        jasperViewer.viewReport(jasperPrint, false);
+
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
