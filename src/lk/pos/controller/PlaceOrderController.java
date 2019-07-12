@@ -177,6 +177,8 @@ public class PlaceOrderController implements Initializable {
     @FXML
     void addtocart(MouseEvent event) {
 
+        tblitem.getItems().clear();
+
         String txtqtys = qty.getText();
 
         Pattern pqty = Pattern.compile("[0-9]{1,4}");

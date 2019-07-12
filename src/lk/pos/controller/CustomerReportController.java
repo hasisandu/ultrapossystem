@@ -91,7 +91,7 @@ public class CustomerReportController implements Initializable {
 
         try {
             String locate = GlobalLocationContent.getLocation();
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByIni.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerReportByUniq.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
             Map<String, Object> parameters = new LinkedHashMap<>();
 
@@ -100,7 +100,7 @@ public class CustomerReportController implements Initializable {
             parameters.put("lastname", txtlname.getText());
             parameters.put("contact", txtcontact.getText());
             parameters.put("address", txtaddress.getText());
-            parameters.put("city", txtaddress.getText());
+            parameters.put("city", txtcity.getText());
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.viewReport(jasperPrint, false);
@@ -231,7 +231,7 @@ public class CustomerReportController implements Initializable {
 
         String locate = GlobalLocationContent.getLocation();
         try {
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerByTable.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "CustomerReportByTable.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameeters, jrEmptyDataSource);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);

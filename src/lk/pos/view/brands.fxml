@@ -24,7 +24,8 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </TableView>
-        <TextField fx:id="txtbrandname" layoutX="162.0" layoutY="250.0" prefHeight="32.0" prefWidth="321.0"/>
+        <TextField fx:id="txtbrandname" layoutX="162.0" layoutY="250.0" prefHeight="32.0" prefWidth="321.0"
+                   promptText="Brand Name"/>
         <JFXButton buttonType="RAISED" layoutX="38.0" layoutY="306.0" onMouseClicked="#save" prefHeight="25.0"
                    prefWidth="134.0" style="-fx-background-color: #3498db;" text="Save" textFill="WHITE">
             <font>

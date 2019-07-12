@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import lk.pos.DBUtility.CrudUtill;
+import lk.pos.TM.BestMvTm;
 import lk.pos.modal.ItemDTO;
 import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -18,6 +19,7 @@ import net.sf.jasperreports.view.JasperViewer;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ItemReportPageController implements Initializable {
@@ -101,15 +103,6 @@ public class ItemReportPageController implements Initializable {
     @FXML
     private JFXTextArea txtdiscribe;
 
-    @FXML
-    void badsell(MouseEvent event) {
-
-    }
-
-    @FXML
-    void bestsellitem(MouseEvent event) {
-
-    }
 
     @FXML
     void getuniq(MouseEvent event) {
@@ -141,12 +134,9 @@ public class ItemReportPageController implements Initializable {
 
     }
 
-    @FXML
-    void lesthan10(MouseEvent event) {
-
-    }
 
     List<ItemDTO> list = new ArrayList();
+    List<BestMvTm> list2 = new ArrayList();
 
     @FXML
     void loadsearch(KeyEvent event) {
@@ -203,7 +193,7 @@ public class ItemReportPageController implements Initializable {
         String locate = GlobalLocationContent.getLocation();
 
         try {
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "StockReportbyTable.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "ItemsReportByTable.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
@@ -225,41 +215,131 @@ public class ItemReportPageController implements Initializable {
 
 
         try {
-
-            list.add(new ItemDTO(
-                    txtitemid.getText(),
-                    txtname.getText(),
-                    Integer.parseInt(txtbadge.getText()),
-                    Integer.parseInt(txtqtyonshop.getText()),
-                    Integer.parseInt(txtqtyonstock.getText()),
-                    txtbrand.getText(),
-                    Double.parseDouble(txtprice.getText()),
-                    txtdiscribe.getText()
-            ));
-
-
-            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
-            Map<String, Object> parameters = new HashMap<>();
-
-
             String locate = GlobalLocationContent.getLocation();
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "ItemByuniq.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "ItemReportByUniq.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
-            parameters.put("ItemReport", jrBeanCollectionDataSource);
+            Map<String, Object> parameters = new LinkedHashMap<>();
+
+            parameters.put("itemid", txtitemid.getText());
+            parameters.put("name", txtname.getText());
+            parameters.put("badgeid", Integer.parseInt(txtbadge.getText()));
+            parameters.put("qtyinshop", Integer.parseInt(txtqtyonshop.getText()));
+            parameters.put("qtyinstock", Integer.parseInt(txtqtyonstock.getText()));
+            parameters.put("brand", txtbrand.getText());
+            parameters.put("price", Double.parseDouble(txtprice.getText()));
+            parameters.put("discribe", txtdiscribe.getText());
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
             JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
             jasperViewer.viewReport(jasperPrint, false);
 
+
         } catch (JRException e) {
             e.printStackTrace();
         }
-
         bt.setDisable(true);
+    }
+
+
+    @FXML
+    void topmw(MouseEvent event) {
+        Date d1 = new Date();
+        SimpleDateFormat sd1 = new SimpleDateFormat("YYYY-MM-dd");
+        String x1 = sd1.format(d1);
+        String sql1 = "select count(qty) as fuck,itemid from orderdetail where date=? group by itemid order by fuck desc";
+
+        Map<String, Integer> m = new HashMap<>();
+
+        try {
+            ResultSet resultSet = CrudUtill.executeQuery(sql1, x1);
+            while (resultSet.next()) {
+                m.put(resultSet.getString("itemid"), resultSet.getInt("fuck"));
+            }
+
+            for (Map.Entry xxx : m.entrySet()
+                    ) {
+                ResultSet f = CrudUtill.executeQuery("select name from stock where itemid=?", xxx.getKey());
+                if (f.next()) {
+                    list2.add(new BestMvTm(xxx.getKey() + "", f.getString("name"), (int) xxx.getValue()));
+                }
+            }
+
+            JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list2);
+            Map<String, Object> parameters = new HashMap<>();
+            parameters.put("BestMv", jrBeanCollectionDataSource);
+
+            String locate = GlobalLocationContent.getLocation();
+
+            try {
+                JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "bstMv.jrxml");
+                JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+                JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+                JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                jasperViewer.viewReport(jasperPrint, false);
+            } catch (JRException e) {
+                e.printStackTrace();
+            }
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @FXML
-    void topmw(MouseEvent event) {
+    void badsell(MouseEvent event) {
+
+    }
+
+    @FXML
+    void bestsellitem(MouseEvent event) {
+
+    }
+
+    @FXML
+    void lesthan10(MouseEvent event) {
+
+        try {
+            ResultSet set = CrudUtill.executeQuery("select a.itemid, a.name, a.badgeid, b.qty, a.qtyonstock, a.brand, a.price, a.describedetail from stock a join shop b on a.itemid=b.id && a.qtyonstock<=10");
+
+            while (set.next()) {
+                System.out.println("ok");
+                list.add(new ItemDTO(
+                        set.getString("itemid"),
+                        set.getString("name"),
+                        set.getInt("badgeid"),
+                        set.getInt("qty"),
+                        set.getInt("qtyonstock"),
+                        set.getString("brand"),
+                        set.getDouble("price"),
+                        set.getString("describedetail")
+                ));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("ItemReport", jrBeanCollectionDataSource);
+
+        String locate = GlobalLocationContent.getLocation();
+
+        try {
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "ItemsReportByTable.jrxml");
+            JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+            JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+            jasperViewer.viewReport(jasperPrint, false);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
 
     }
 }

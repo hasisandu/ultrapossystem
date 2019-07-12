@@ -120,8 +120,9 @@
                 <Font size="14.0"/>
             </font>
         </JFXTextArea>
-        <JFXButton buttonType="RAISED" layoutX="712.0" layoutY="374.0" onMouseClicked="#bestsellitem" prefHeight="30.0"
-                   prefWidth="141.0" style="-fx-background-color: #00a8ff;" text="Best Selled Item" textFill="WHITE">
+        <JFXButton buttonType="RAISED" disable="true" layoutX="712.0" layoutY="374.0" onMouseClicked="#bestsellitem"
+                   prefHeight="30.0" prefWidth="141.0" style="-fx-background-color: #00a8ff;" text="Best Selled Item"
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>
@@ -138,8 +139,9 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
-        <JFXButton buttonType="RAISED" layoutX="712.0" layoutY="444.0" onMouseClicked="#badsell" prefHeight="30.0"
-                   prefWidth="141.0" style="-fx-background-color: #00a8ff;" text="Bad Selling Items" textFill="WHITE">
+        <JFXButton buttonType="RAISED" disable="true" layoutX="712.0" layoutY="444.0" onMouseClicked="#badsell"
+                   prefHeight="30.0" prefWidth="141.0" style="-fx-background-color: #00a8ff;" text="Bad Selling Items"
+                   textFill="WHITE">
             <font>
                 <Font name="System Bold" size="14.0"/>
             </font>

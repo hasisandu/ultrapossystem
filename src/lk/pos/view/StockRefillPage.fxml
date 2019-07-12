@@ -47,13 +47,13 @@
             </font>
         </TextField>
         <TextField fx:id="txtqty" layoutX="276.0" layoutY="152.0" prefHeight="31.0" prefWidth="124.0"
-                   promptText="QTY On Shop">
+                   promptText="QTY On Stock">
             <font>
                 <Font size="14.0"/>
             </font>
         </TextField>
-        <TextField fx:id="txtprice" layoutX="409.0" layoutY="152.0" prefHeight="31.0" prefWidth="118.0"
-                   promptText="Price">
+        <TextField fx:id="txtprice" layoutX="278.0" layoutY="203.0" prefHeight="31.0" prefWidth="118.0"
+                   promptText="Selling Price">
             <font>
                 <Font size="14.0"/>
             </font>
@@ -130,5 +130,11 @@
                 <Cursor fx:constant="HAND"/>
             </cursor>
         </JFXButton>
+        <TextField fx:id="buyprice" layoutX="403.0" layoutY="152.0" prefHeight="31.0" prefWidth="134.0"
+                   promptText="Buying Price" style="-fx-border-color: blue;">
+            <font>
+                <Font name="System Bold" size="13.0"/>
+            </font>
+        </TextField>
     </children>
 </AnchorPane>

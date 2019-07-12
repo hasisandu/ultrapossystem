@@ -84,6 +84,11 @@ public class StockController implements Initializable {
     private TextField txtprice;
 
     @FXML
+    private TextField buyprice;
+
+
+
+    @FXML
     private TextArea txtalldescribe;
 
     @FXML
@@ -149,6 +154,7 @@ public class StockController implements Initializable {
                 txtprice.setText(set.getDouble(6) + "");
                 txtbadgeid.setText(set.getInt(2) + "");
                 txtalldescribe.setText(set.getString(7));
+                buyprice.setText(set.getDouble(8) + "");
             } else {
                 new Alert(Alert.AlertType.WARNING, "Imposable! This Product Has Deleted...", ButtonType.CLOSE).show();
             }
@@ -173,27 +179,31 @@ public class StockController implements Initializable {
             String txtpname = txtproductname.getText();
             String txtqtyon = txtqty.getText();
             String txtprce = txtprice.getText();
+            String txtbuyprce = buyprice.getText();
 
             Pattern ptxtbrand = Pattern.compile("[a-zA-z0-9]{3,25}");
-            Pattern ptxtname = Pattern.compile("[a-zA-z0-9]{3,25}");
+            Pattern ptxtname = Pattern.compile("[a-zA-z 0-9]{3,25}");
             Pattern ptxtqty = Pattern.compile("[0-9]{1,4}");
             Pattern ptxtprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+            Pattern ptxtbuyprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
 
 
             Matcher mtxtbrand = ptxtbrand.matcher(txtbrands);
             Matcher mtxtname = ptxtname.matcher(txtpname);
             Matcher mtxtqty = ptxtqty.matcher(txtqtyon);
             Matcher mprice = ptxtprice.matcher(txtprce);
+            Matcher mprbuyice = ptxtbuyprice.matcher(txtbuyprce);
 
             boolean btxtbrand = mtxtbrand.matches();
             boolean btxtname = mtxtname.matches();
             boolean btxtqty = mtxtqty.matches();
             boolean bprice = mprice.matches();
+            boolean bpbuyrice = mprbuyice.matches();
 
-            if (btxtbrand && btxtname && btxtqty && bprice) {
-                String sql = "INSERT INTO stock VALUES(?,?,?,?,?,?,?)";
+            if (btxtbrand && btxtname && btxtqty && bprice && bpbuyrice) {
+                String sql = "INSERT INTO stock VALUES(?,?,?,?,?,?,?,?)";
                 try {
-                    boolean saved = CrudUtill.executeUpdate(sql, itemidtxt.getText(), txtbadgeid.getText(), txtproductname.getText(), txtbrand.getSelectionModel().getSelectedItem(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), txtalldescribe.getText());
+                    boolean saved = CrudUtill.executeUpdate(sql, itemidtxt.getText(), txtbadgeid.getText(), txtproductname.getText(), txtbrand.getSelectionModel().getSelectedItem(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), txtalldescribe.getText(), Double.parseDouble(buyprice.getText()));
                     if (saved) {
                         new Alert(Alert.AlertType.INFORMATION, "Product Has been Saved !", ButtonType.CLOSE).show();
                         clerll();
@@ -206,9 +216,11 @@ public class StockController implements Initializable {
                     e.printStackTrace();
                 }
             } else {
+                System.out.println("sdf");
                 new Alert(Alert.AlertType.ERROR, "Fields Missing !", ButtonType.CLOSE).show();
             }
         } else {
+            System.out.println("2");
             new Alert(Alert.AlertType.WARNING, "Select A brand !", ButtonType.CLOSE).show();
         }
 
@@ -222,27 +234,31 @@ public class StockController implements Initializable {
             String txtpname = txtproductname.getText();
             String txtqtyon = txtqty.getText();
             String txtprce = txtprice.getText();
+            String txtbuyprce = buyprice.getText();
 
             Pattern ptxtbrand = Pattern.compile("[a-zA-Z0-9]{3,25}");
-            Pattern ptxtname = Pattern.compile("[a-zA-Z0-9]{3,25}");
+            Pattern ptxtname = Pattern.compile("[a-zA-Z 0-9]{3,25}");
             Pattern ptxtqty = Pattern.compile("[0-9]{1,4}");
             Pattern ptxtprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
+            Pattern ptxtbuyprice = Pattern.compile("[0-9]+([.][0-9]{1,2})?");
 
 
             Matcher mtxtbrand = ptxtbrand.matcher(txtbrands);
             Matcher mtxtname = ptxtname.matcher(txtpname);
             Matcher mtxtqty = ptxtqty.matcher(txtqtyon);
             Matcher mprice = ptxtprice.matcher(txtprce);
+            Matcher mprbuyice = ptxtbuyprice.matcher(txtbuyprce);
 
             boolean btxtbrand = mtxtbrand.matches();
             boolean btxtname = mtxtname.matches();
             boolean btxtqty = mtxtqty.matches();
             boolean bprice = mprice.matches();
+            boolean bpbuyrice = mprbuyice.matches();
 
-            if (btxtbrand && btxtname && btxtqty && bprice) {
-                String sql = "update stock set brand=?, name=?, qtyonstock=?, price=?, badgeid=?, describedetail=? where itemid=?";
+            if (btxtbrand && btxtname && btxtqty && bprice && bpbuyrice) {
+                String sql = "update stock set brand=?, name=?, qtyonstock=?, price=?, badgeid=?, describedetail=?, buyprice=? where itemid=?";
                 try {
-                    boolean updated = CrudUtill.executeUpdate(sql, txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), txtalldescribe.getText(), itemidtxt.getText());
+                    boolean updated = CrudUtill.executeUpdate(sql, txtbrand.getSelectionModel().getSelectedItem(), txtproductname.getText(), Integer.parseInt(txtqty.getText()), Double.parseDouble(txtprice.getText()), Integer.parseInt(txtbadgeid.getText()), txtalldescribe.getText(), Double.parseDouble(buyprice.getText()), itemidtxt.getText());
                     if (updated) {
                         new Alert(Alert.AlertType.INFORMATION, "Product Has been Updated !", ButtonType.CLOSE).show();
                         clerll();
@@ -352,6 +368,7 @@ public class StockController implements Initializable {
         txtprice.setText("");
         txtdescribe.setText("");
         txtalldescribe.setText("");
+        buyprice.setText("");
         loadBrandset();
     }
 

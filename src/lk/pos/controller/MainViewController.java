@@ -13,12 +13,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import lk.pos.DBUtility.CrudUtill;
+import lk.pos.TM.FuckinClass;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -34,6 +36,7 @@ public class MainViewController implements Initializable {
         loadLessthan10();
         loadSupplyCount();
         loadDateAndTime();
+        loadDailyIncome();
 
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/Default.fxml"));
@@ -41,6 +44,48 @@ public class MainViewController implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private ArrayList<FuckinClass> todayids = new ArrayList<>();
+    private ArrayList<FuckinClass> monthayids = new ArrayList<>();
+    private Double ttl = 0.00;
+    private Double monthttl = 0.00;
+
+    private void loadDailyIncome() {
+
+        ttl = 0.00;
+        Date d1 = new Date();
+        SimpleDateFormat sd1 = new SimpleDateFormat("YYYY-MM-dd");
+        String x1 = sd1.format(d1);
+
+        todayids.clear();
+
+        String sql = "select itemid,qty from orderdetail where date=?";
+        try {
+            ResultSet resultSet = CrudUtill.executeQuery(sql, x1);
+
+            while (resultSet.next()) {
+                todayids.add(new FuckinClass(resultSet.getString(1), Integer.parseInt(resultSet.getString(2))));
+            }
+
+            for (FuckinClass xyz : todayids
+                    ) {
+                String sql2 = "select price,buyprice from stock where itemid=?";
+                ResultSet se = CrudUtill.executeQuery(sql2, xyz.getId());
+                if (se.next()) {
+                    ttl += ((se.getDouble(1) - se.getDouble(2)) * xyz.getQty());
+                }
+            }
+
+            todayincome.setText(ttl + "");
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @FXML
@@ -120,6 +165,7 @@ public class MainViewController implements Initializable {
 
 
     public void PageLoader(String name) {
+        loadDailyIncome();
         try {
             AnchorPane root = FXMLLoader.load(getClass().getResource("../view/" + name + ".fxml"));
             mainwindow.getChildren().add(root);

@@ -112,7 +112,7 @@ public class OrderReportController implements Initializable {
 
 
             String locate = GlobalLocationContent.getLocation();
-            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "orders.jrxml");
+            JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "OrderByTable.jrxml");
             JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
             parameters.put("ItemReport", jrBeanCollectionDataSource);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
@@ -141,25 +141,34 @@ public class OrderReportController implements Initializable {
                 list.clear();
                 while (set.next()) {
 
+
+                    double pay = 0.00;
+                    String sql2 = "select sum(payment) from sellpayment where orderid = " + set.getInt(1) + "";
+                    ResultSet set2 = CrudUtill.executeQuery(sql2);
+                    if (set2.next()) {
+                        pay = set2.getDouble(1);
+                    }
+
+
                     list.add(new OrderDTO(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            (set.getDouble(5) - pay),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
+                            set.getDouble(7),
                             set.getString(6)
                     ));
 
                     tbl.getItems().add(new OrderDTO(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            (set.getDouble(5) - pay),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
+                            set.getDouble(7),
                             set.getString(6)
                     ));
                 }
@@ -184,25 +193,34 @@ public class OrderReportController implements Initializable {
                 tbl.getItems().clear();
                 while (set.next()) {
 
+
+                    double pay = 0.00;
+                    String sql2 = "select sum(payment) from sellpayment where orderid = " + set.getInt(1) + "";
+                    ResultSet set2 = CrudUtill.executeQuery(sql2);
+                    if (set2.next()) {
+                        pay = set2.getDouble(1);
+                    }
+
+
                     list.add(new OrderDTO(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            (set.getDouble(5) - pay),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
+                            set.getDouble(7),
                             set.getString(6)
                     ));
 
                     tbl.getItems().add(new OrderDTO(
                             set.getInt(1),
                             set.getString(2),
-                            255,
+                            (set.getDouble(5) - pay),
                             set.getString(3),
                             set.getString(4),
                             set.getDouble(5),
-                            250,
+                            set.getDouble(7),
                             set.getString(6)
                     ));
                 }
@@ -230,25 +248,32 @@ public class OrderReportController implements Initializable {
 
             while (set.next()) {
 
+                double pay = 0.00;
+                String sql2 = "select sum(payment) from sellpayment where orderid = " + set.getInt(1) + "";
+                ResultSet set2 = CrudUtill.executeQuery(sql2);
+                if (set2.next()) {
+                    pay = set2.getDouble(1);
+                }
+
                 list.add(new OrderDTO(
                         set.getInt(1),
                         set.getString(2),
-                        255,
+                        (set.getDouble(5) - pay),
                         set.getString(3),
                         set.getString(4),
                         set.getDouble(5),
-                        250,
+                        set.getDouble(7),
                         set.getString(6)
                 ));
 
                 tbl.getItems().add(new OrderDTO(
                         set.getInt(1),
                         set.getString(2),
-                        255,
+                        (set.getDouble(5) - pay),
                         set.getString(3),
                         set.getString(4),
                         set.getDouble(5),
-                        250,
+                        set.getDouble(7),
                         set.getString(6)
                 ));
             }

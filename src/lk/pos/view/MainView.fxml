@@ -273,10 +273,10 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="todayincome" fill="#fab1a0" layoutX="190.0" layoutY="70.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="92.94140625">
+             <Text fx:id="todayincome" fill="#fab1a0" layoutX="170.0" layoutY="68.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="156.0458984374999">
                <font>
-                  <Font name="System Bold" size="41.0" />
+                   <Font name="System Bold" size="24.0"/>
                </font>
                  <cursor>
                      <Cursor fx:constant="HAND"/>
@@ -287,10 +287,10 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="monthincome" fill="#4834d4" layoutX="357.0" layoutY="70.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="96.7490234375">
+             <Text fx:id="monthincome" fill="#4834d4" layoutX="338.0" layoutY="66.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="Pending Untill 1.1" textAlignment="CENTER" wrappingWidth="156.0458984374999">
                <font>
-                  <Font name="System Bold" size="41.0" />
+                   <Font name="System Bold" size="17.0"/>
                </font>
                  <cursor>
                      <Cursor fx:constant="HAND"/>
@@ -331,8 +331,8 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Text>
-             <Text fx:id="debdesCount" fill="#44bd32" layoutX="852.0" layoutY="72.0" strokeType="OUTSIDE"
-                   strokeWidth="0.0" text="Not Available" textAlignment="CENTER" wrappingWidth="171.0458984374999">
+             <Text fx:id="debdesCount" fill="#44bd32" layoutX="852.0" layoutY="65.0" strokeType="OUTSIDE"
+                   strokeWidth="0.0" text="Pending Untill 1.1" textAlignment="CENTER" wrappingWidth="171.0458984374999">
                <font>
                    <Font name="System Bold" size="17.0"/>
                </font>
