@@ -12,6 +12,9 @@ import lk.pos.DBUtility.CrudUtill;
 import lk.pos.TM.OrderTM;
 import lk.pos.TM.PaymentTM;
 import lk.pos.db.DBConnection;
+import net.sf.jasperreports.engine.*;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -165,7 +168,7 @@ public class SellingPriceController implements Initializable {
         boolean bamount = mamount.matches();
         boolean bbalance = mbalance.matches();
 
-        if (borderid && brest && bamount && bbalance) {
+        if (bamount) {
             Date d1 = new Date();
             SimpleDateFormat sd1 = new SimpleDateFormat("YYYY-MM-dd");
             String x1 = sd1.format(d1);
@@ -243,29 +246,31 @@ public class SellingPriceController implements Initializable {
 
 
                     connection.commit();
-//                    try {
-//
-//                        double fuckttl;
-//                        fuckttl = (Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText()));
-//
-//                        JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
-//                        Map<String, Object> parameters = new HashMap<>();
-//                        String locate = GlobalLocationContent.getLocation();
-//                        JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "BuyPaymentTable.jrxml");
-//                        JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
-//                        parameters.put("ItemDataSource", jrBeanCollectionDataSource);
-//                        parameters.put("orderid", Integer.parseInt(txtorderid.getText()));
-//                        parameters.put("customerid", placeOrderController.cusid);
-//                        parameters.put("total", Double.parseDouble(txtrest.getText()));
-//                        parameters.put("payment", Double.parseDouble(txtamount.getText()));
-//                        parameters.put("rest", fuckttl);
-//                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
-//                        JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
-//                        jasperViewer.viewReport(jasperPrint, false);
+                    try {
 
-//                    } catch (JRException e) {
-//                        e.printStackTrace();
-//                    }
+                        double fuckttl;
+                        fuckttl = (Double.parseDouble(txtrest.getText()) - Double.parseDouble(txtamount.getText()));
+
+                        JRBeanCollectionDataSource jrBeanCollectionDataSource = new JRBeanCollectionDataSource(list);
+                        Map<String, Object> parameters = new HashMap<>();
+                        String locate = GlobalLocationContent.getLocation();
+                        JasperReport jasperReport = JasperCompileManager.compileReport("" + locate + "OrderBill.jrxml");
+                        JREmptyDataSource jrEmptyDataSource = new JREmptyDataSource();
+                        parameters.put("ItemDataSource", jrBeanCollectionDataSource);
+                        parameters.put("orderid", Integer.parseInt(txtorderid.getText()));
+                        System.out.println(Integer.parseInt(txtorderid.getText()));
+                        System.out.println(placeOrderController.cusid);
+                        parameters.put("customerid", placeOrderController.cusid);
+                        parameters.put("total", Double.parseDouble(txtrest.getText()));
+                        parameters.put("payment", Double.parseDouble(txtamount.getText()));
+                        parameters.put("rest", fuckttl);
+                        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, parameters, jrEmptyDataSource);
+                        JasperViewer jasperViewer = new JasperViewer(jasperPrint, false);
+                        jasperViewer.viewReport(jasperPrint, false);
+
+                    } catch (JRException e) {
+                        e.printStackTrace();
+                    }
 
                 } catch (SQLException e) {
                     e.printStackTrace();
